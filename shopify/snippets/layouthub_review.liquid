@@ -125,12 +125,12 @@
         {%- endif -%}
     {%- when 'growave'-%}
         {%- if review_type == 'single' -%}
-            {% capture the_snippet_review_avg %}{% render 'ssw-widget-avg-rate-profile' %}{% endcapture %}
+            {% capture the_snippet_review_avg %}{% render 'ssw-widget-avg-rate-profile', product: product %}{% endcapture %}
             {% unless the_snippet_review_avg contains 'Liquid error' %}
             {{ the_snippet_review_avg }}
             {% endunless %}    
         {%- elsif review_type == 'form' -%}
-            {% capture the_snippet_reviews %}{% render 'socialshopwave-widget-recommends' with 1 %}{% endcapture %}
+            {% capture the_snippet_reviews %}{% render 'socialshopwave-widget-recommends', product: product %}{% endcapture %}
             {% unless the_snippet_reviews contains 'Liquid error' %}
             {{ the_snippet_reviews }}
             {% endunless %}    
@@ -147,7 +147,7 @@
                 </div>
             </a>
         {% elsif review_type == 'form'%}
-            {% render "reviews-importer" %}
+            {% render "reviews-importer", product: product %}
         {% else%}
             <div class="scm-reviews-rate" data-rate-version2= {{ product.metafields.scm_review_importer.reviewsData.reviewCountInfo | json}}>
             </div>

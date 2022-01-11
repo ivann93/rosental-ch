@@ -6,108 +6,25 @@
   const cartDrawer = () => {
     return {
       open: false,
-      cart: null, 
+      cart: null,
       items: [],
       discountCode: null,
       validDiscountCode: "",
       freeShippingFrom: 5000,
       checkoutCart: {
-        total: 0, 
+        total: 0,
         subtotal: 0,
         discount: 0
       },
       codeStatus: null,
       usedKeyboard: false,
-      choiceOverlay: false,
-      freeProducts: [],
-      selectedFreeVariants: [],
-      maxFreeProducts: -1,
-      initChoiceOverlay(args) {
-        const {maxFreeProducts, freeProducts} = args;
-        let currentFreeProductsCount = this.items.filter(item => item.price == 0)
-        let freeProductFound = false
-
-        if (currentFreeProductsCount > maxFreeProducts) {
-          let i = 1;
-          for (const item of this.items) {
-            if (item.price == 0) {
-              CartJS.removeItem(i)
-            }
-            i++;
-          }
-        } else {
-          for (const freeProduct of freeProducts) {
-            const f = this.items.find(item => item.variant_id == freeProduct.variants[0].variantId)
-            if (f) {
-              freeProductFound = true
-            }
-          }
-        }
-
-        this.maxFreeProducts = maxFreeProducts
-        this.freeProducts = freeProducts
-        for (const product of this.freeProducts) {
-          product.product_worth = "";
-          product.available = true;
-        }
-
-        if (!freeProductFound) {
-          this.openChoiceOverlay();
-        }
-      },
-      openChoiceOverlay() {
-        this.choiceOverlay = true;
-        this.loadImages();
-      },
-      toggleFreeProduct(product) {
-        if (!product.available) {
-          return;
-        }
-        if (this.maxFreeProducts == 1) {
-          let i = 1;
-          let alreadyInCart = false;
-          for (const item of this.items) {
-            if (item.price == 0 && item.variant_id != product.variants[0].variantId) {
-              CartJS.removeItem(i)
-            }
-            if (item.variant_id == product.variants[0].variantId) {
-              alreadyInCart = true;
-            }
-            i++
-          }
-          if (!alreadyInCart) {
-            this.selectedFreeVariants = [];
-            this.selectedFreeVariants.push(product.variants[0].variantId);
-            CartJS.addItem(product.variants[0].variantId)
-          }
-        }
-        this.choiceOverlay = false;
-      },
-      isFreeProductSelected(product) {
-        return this.selectedFreeVariants.indexOf(product.variants[0].variantId) > -1
-      },
-      loadImages() {
-        for (const product of this.freeProducts) {
-          fetch(`/search?view=id&type=product&q=${encodeURI('id:' + product.productId)}`)
-            .then(response => response.json())
-            .then(response => {
-              if (response.products && response.products.length > 0) {
-                product.image = response.products[0].featured_image;
-                product.product_worth = response.products[0].product_worth;
-                product.available = !!response.products[0].available;
-              }
-            }).catch(err => {
-            })
-        }
-      },
       checkDiscountCode() {
         if (this.discountCode && cart) {
           let code = this.discountCode;
           code = code.trim().toLowerCase();
           let shop = Shopify.shop;
           const data = { cart: JSON.parse(JSON.stringify(this.cart)), code: code, shop: shop };
-          //fetch('https://checkout-api.rosental.de/checkout', {
-          fetch('https://rosental-checkout-api.digitalsprung.de/checkout', {
+          fetch('https://checkout-api.rosental.de/checkout', {
             method: 'POST', // or 'PUT'
             headers: {
               'Content-Type': 'application/json',
@@ -117,13 +34,7 @@
           .then(response => response.json())
           .then(data => {
             this.codeStatus = data.status;
-            if (data.checkoutCart) {
-              this.checkoutCart = data.checkoutCart;
-            } else {
-              this.checkoutCart.total = this.cart.total_price;
-              this.checkoutCart.subtotal = this.cart.total_price;
-              this.checkoutCart.discount = 0;
-            }
+            this.checkoutCart = data.checkoutCart;
             if (data.status == 'valid') {
               this.validDiscountCode = code.trim().toUpperCase()
               setCookie("discount_code", code.trim().toUpperCase());
@@ -139,7 +50,7 @@
                   })
                 }
                 EasyCart.callHook('after_discount_code_check', [code.trim(), items]);
-              }, 500);
+              }, 100);
             } else {
               //this.validDiscountCode = null;
             }
@@ -147,18 +58,9 @@
           })
         }
       },
-      freeShippingCriteriaMet() {
-        return this.checkoutCart && this.checkoutCart.total >= this.getFreeShippingFrom()
-      },
-      getFreeShippingFrom() {
-        if (this.checkoutCart && this.checkoutCart.free_shipping_from >= 0) {
-          return this.checkoutCart.free_shipping_from
-        }
-        return this.freeShippingFrom
-      },
       width() {
-        if (this.checkoutCart.total < this.getFreeShippingFrom()) {
-          return Math.abs(this.checkoutCart.total / this.getFreeShippingFrom() * 100);
+        if (this.checkoutCart.total < this.freeShippingFrom) {
+          return Math.abs(this.checkoutCart.total / this.freeShippingFrom * 100);
         }
         return 100
       },
@@ -187,7 +89,6 @@
         return image
       },
       updateCart(cart) {
-        this.selectedFreeVariants = []
         this.cart = cart
         this.items = cart.items
         if (!this.validDiscountCode) {
@@ -196,8 +97,7 @@
         this.checkDiscountCode()
       },
       shippingDiff(text, format) {
-        var total = (this.checkoutCart !== undefined && this.checkoutCart.total > 0) ? this.checkoutCart.total : 0;
-        const diff = this.getFreeShippingFrom() - this.checkoutCart.total;
+        const diff = this.freeShippingFrom - this.checkoutCart.total;
         const t = text.replace("[money]", Shopify.formatMoney(diff, format))
         return t
       },
@@ -234,61 +134,6 @@
   x-init="init(CartJSON)"
   class="w-0 cart-drawer"
   >
-
-  <div class="w-100vw h-100vh fixed inset-0 z-1000"
-    x-show.transition.opacity.duration.500="choiceOverlay"
-    @easycart-choice.window="initChoiceOverlay($event.detail)">
-    <div class="absolute inset-0 w-full h-full opacity-75 bg-black cursor-pointer"
-      @click="choiceOverlay = false;"></div> 
-      <div class="w-100vw h-100vh md:w-90vw md:max-w-xl md:h-auto min-h-70vh bg-white absolute inset-0 md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 flex overflow-hidden z-1010"
-      x-show.transition.opacity.duration.500="choiceOverlay">
-      <div class="overflow-auto pb-10 w-full">
-        <div class="max-w-md mx-auto py-10">
-          <div class="w-full text-center text-2xl">
-            <h2 x-show="maxFreeProducts == 1">
-              Wähle dein Geschenk
-            </h2>
-            <h2 x-show="maxFreeProducts > 1">
-              Wähle <span x-html="maxFreeProducts"></span> Geschenke
-            </h2>
-          </div>
-          <div class="flex flex-col mt-5"> 
-            <template x-for="product in freeProducts">
-              <div class="flex border-b border-solid border-alabaster px-5 py-5 justify-center items-center align-center space-x-5 cursor-pointer"
-                :class="{'bg-green': isFreeProductSelected(product), 'opacity-50': !product.available}"
-                @click="toggleFreeProduct(product)">
-                <div class="w-1/3">
-                  <div class="mx-auto max-w-24">
-                    <div class="aspect-w-1 aspect-h-1 relative flex justify-center items-center align-center">
-                      <template x-if="product.image">
-                        <img :src="product.image" class="absolute inset-0 w-full h-full object-contain object-center" />
-                      </template>
-                    </div>
-                  </div>
-                </div>
-                <div class="w-2/3">
-                  <div class="text-lg md:text-base"><strong x-html="product.title"></strong></div>
-                  <div x-show="product.available && product.product_worth" x-html="product.product_worth" class="font-medium text-gray"></div>
-                  <div x-show="!product.available" class="font-medium text-gray">Ausverkauft</div>
-                  <div class="px-5 py-1 mt-1 text-center inline-block text-xs" style="color: #8b86d9; border: 1px solid #8b86d9;"
-                    x-show="product.available"
-                    >
-                    <span x-show="isFreeProductSelected(product)">Ausgewählt</span> 
-                    <span x-show="!isFreeProductSelected(product)">Auswählen</span>
-                  </div>
-                </div>
-              </div>
-            </template>
-          </div>
-        </div>
-      </div>
-      <button
-        @click="choiceOverlay = false"
-        class="absolute top-0 right-0 mr-5 mt-3 z-1010">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
-    </div>
-  </div>
 
   <div
     x-show.transition.opacity.duration.300="open"
@@ -339,11 +184,12 @@
       <div class="block bg-white" x-show="cart.item_count > 0">
 
         {% if show_shipping_bar %}
-        <div class="border-b border-light-gray border-solid pb-5 pt-3 w-full px-5 text-sm">
-          <div class="text-center mb-2" x-show="freeShippingCriteriaMet()">
+        <div class="border-b border-light-gra
+        y border-solid pb-5 pt-3 w-full px-5 text-sm">
+          <div class="text-center mb-2" x-show="checkoutCart.total >= freeShippingFrom">
             <span class="mr-2">{{ free_shipping_icon }}</span>{{ 'cart.free_shipping' | t }}
           </div>
-          <div class="text-center mb-2" x-show="!freeShippingCriteriaMet()">
+          <div class="text-center mb-2" x-show="checkoutCart.total < freeShippingFrom">
             <span class="mr-2">{{ free_shipping_icon }}</span><span x-text="shippingDiff('{{ 'cart.free_shipping_at' | t }}', '{{ shop.money_format }}')"></span>
           </div>
           <div class="bg-light-gray h-3 w-full rounded-md">
@@ -368,16 +214,10 @@
                   class="font-normal text-sm mb-1"
                   x-html="cartItem.title"
                 ></h2>
-                <template x-if="cartItem.price == 0 && freeProducts.length > 1">
-                  <div class="mt-1">
-                    <div class="underline text-xs cursor-pointer" @click="openChoiceOverlay()"
-                    >Geschenk ändern</div>
-                  </div>
-                </template>
                 {% comment %}
                 <template x-for="option in cartItem.options_with_values">
                   <div class="mt-1 text-xs leading-none text-gray" x-show="option.value != 'Default Title'">
-                    <span x-text="option.name"></span>:
+                    {% comment %} <span x-text="option.name"></span>:{% endcomment %} 
                     <span x-text="option.value"></span>
                   </div>
                 </template>
@@ -474,11 +314,6 @@
                 x-html="discountApplied('{{ 'cart.discount_applied' | t }}', '{{ shop.money_format }}')"
                 class="w-full">
               </span>
-            </div>
-
-            <div x-show="codeStatus == 'valid' && checkoutCart.free_shipping" class="px-2 py-2 bg-green rounded-md flex mt-3">
-              <svg class="cart-icon ml-2 mr-3" fill="#499949" width="24px" height="24px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18"><path d="M17.78 3.09C17.45 2.443 16.778 2 16 2h-5.165c-.535 0-1.046.214-1.422.593l-6.82 6.89c0 .002 0 .003-.002.003-.245.253-.413.554-.5.874L.738 8.055c-.56-.953-.24-2.178.712-2.737L9.823.425C10.284.155 10.834.08 11.35.22l4.99 1.337c.755.203 1.293.814 1.44 1.533z" fill-opacity=".55"></path><path d="M10.835 2H16c1.105 0 2 .895 2 2v5.172c0 .53-.21 1.04-.586 1.414l-6.818 6.818c-.777.778-2.036.782-2.82.01l-5.166-5.1c-.786-.775-.794-2.04-.02-2.828.002 0 .003 0 .003-.002l6.82-6.89C9.79 2.214 10.3 2 10.835 2zM13.5 8c.828 0 1.5-.672 1.5-1.5S14.328 5 13.5 5 12 5.672 12 6.5 12.672 8 13.5 8z"></path></svg>
-              <span class="w-full">{{ 'cart.discount_free_shipping' | t }}</span>
             </div>
           </div>
 

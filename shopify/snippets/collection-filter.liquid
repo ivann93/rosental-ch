@@ -1,0 +1,73 @@
+<div class="CollectionFilter">
+  {%- if collection.all_tags.size > 0 -%}
+    {%- assign categories = '' -%}
+
+    {%- for tag in collection.all_tags -%}
+      {%- if tag contains '_' -%}
+        {%- capture categories -%}{%- unless categories == blank -%}{{ categories }}|{%- endunless -%}{{ tag | split: '_' | first }}{%- endcapture -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- assign cat_array = categories | split: '|' | uniq -%}
+
+    {%- assign first_match = true -%}
+
+    {% for cat_item in cat_array %}
+      {%- if cat_item == 'Was ist dein Hauttyp?' or cat_item == 'Was ist dein Hautbedürfnis?' -%}
+        {%- if cat_item == 'Was ist dein Hauttyp?' -%}
+          {%- assign category = 'Wähle deinen Hauttyp' -%}
+        {%- endif -%}
+        {%- if cat_item == 'Was ist dein Hautbedürfnis?' -%}
+          {%- assign category = 'Wähle dein Hautbedürfnis' -%}
+        {%- endif -%}
+
+        <div class="HorizontalScrollWrapper" data-filter-category="{{ category }}">
+          <div class="Collapsible{% if first_match %} -active{% endif %}">
+            <div class="Collapsible__Title">
+              <p>{{ category }}</p>
+              <p class="Count"></p>
+            </div>
+            <div class="Collapsible__Icon">
+              {%- render 'icon', icon: 'chevron-down' -%}
+            </div>
+          </div>
+
+          <div
+            class="FilterCategory{% if first_match %} -active{% endif %}"
+            data-filter-category="{{ category }}"
+            >
+            <div class="HorizontalScrollContainer">
+              <div class="ItemContainer FlexContainer">
+                <div class="FlexContainer">
+                  {%- assign index = 0 -%}
+
+                  {%- for tag in collection.all_tags -%}
+                    {%- assign cat = tag | split: '_' | first -%} 
+
+                    {%- if cat != tag and cat_item == cat -%}
+                      {%- assign tagName = tag | remove_first: cat_item | remove_first: '_' -%}
+                      
+                      <div 
+                        class="FilterItem" 
+                        data-filter-category="{{ category }}" 
+                        data-tag="{{ tag }}"
+                        data-index="{{ index }}"
+                        >
+                        <p>{{ tagName }}</p>
+                        {%- render 'icon', icon: 'plus' -%}
+                      </div>
+
+                      {%- assign index = index | plus: 1 -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+
+        {%- assign first_match = false -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+</div>

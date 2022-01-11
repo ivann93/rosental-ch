@@ -1,3 +1,12 @@
+{%- capture liking_badge -%}
+  <div class="liking-badge">
+    <div class="liking-badge__image">
+      <img src="//cdn.shopify.com/s/files/1/0518/8619/4876/files/nina-moghadamm-portrait.jpg?v=1612198340" alt="Nina Moghadamm (Portrait)">
+    </div>
+    <p class="liking-badge__text"><strong>Nina Moghadamm</strong> gefällt dieses Produkt</p>
+  </div>
+{%- endcapture -%}
+
 <article id="section-{{ section.id }}" class="page-section product" data-collection="{{ collection.handle }}" data-id="{{ product.id }}" data-settings-hv="{{ section.settings.hide_variants }}" data-availability="{{ product.available }}" {%- if product.has_only_default_variant -%} data-single-variant="true" {%- endif -%}>
 
   {% assign variant = product.selected_or_first_available_variant %}
@@ -39,6 +48,8 @@
         <span class='product-gallery__view-in-space-text'>{{ 'products.page.view_in_space' | t }}</span>
       </button>
     {% endif %}
+
+    {{ liking_badge }}
   
     <div class="product-gallery__thumbnails product-gallery__thumbnails--{{ section.settings.gallery_pagination }}">
       <div class="thumbnails-holder">
@@ -75,6 +86,9 @@
     <div class="desktop-breadcrumb">{% render 'breadcrumb' %}</div>
 
 		<header class="product__header">
+
+      {{ liking_badge }}
+
       {%- for tag in product.tags -%}
         {%- assign badge_type_arr = tag | split: '[' -%}
         {%- assign pre = badge_type_arr | first -%}
@@ -95,49 +109,47 @@
 			{% endif %}
 
       {% if section.settings.show_reviews_badge %}
-        <a class="product__reviews">
-          <div class="ruk_rating_snippet" data-sku="{{ product.variants | map: "sku" | join: ";" }};{{ product.variants | map: "id" | join: ";" }};{{ product.handle }};"></div>
+        <a class="product__reviews" href="#shopify-product-reviews">
+          <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
         </a>
       {% endif %}
 
-      {% if product.price > 0 %}
-        <span class="product__price">
+			<span class="product__price">
 
-          <span class="product__price--compare">
-            {% if product.compare_at_price > product.price %}
-              {{ product.compare_at_price | money }}
-            {% endif %}
-          </span>
-          <span class="product__price--original">{{ product.price | money }}</span>
-          
-
-          {% if variant.unit_price_measurement %}
-            <span class="unit-price">
-              {{ variant.unit_price | money }} / 
-              {% if variant.unit_price_measurement.reference_value != 1 %}
-                {{ variant.unit_price_measurement.reference_value }}
-              {% endif %}
-              {{ variant.unit_price_measurement.reference_unit }}
-            </span>
-          {% endif %}
-
+				<span class="product__price--compare">
+          {% if product.compare_at_price > product.price %}
+            {{ product.compare_at_price | money }}
+				  {% endif %}
         </span>
+				<span class="product__price--original">{{ product.price | money }}</span>
+        
 
-        <span class="product__sku hidden">{{ variant.sku | ecsape }}</span>
+        {% if variant.unit_price_measurement %}
+          <span class="unit-price">
+            {{ variant.unit_price | money }} / 
+            {% if variant.unit_price_measurement.reference_value != 1 %}
+              {{ variant.unit_price_measurement.reference_value }}
+            {% endif %}
+            {{ variant.unit_price_measurement.reference_unit }}
+          </span>
+        {% endif %}
 
-        {% if section.settings.show_tax_info %}
-          {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
-            <div class="product-policies" data-product-policies>
-              {% if shop.taxes_included %}
-                {{ 'products.page.include_taxes' | t }}
-              {%- endif -%}
-              {%- if shop.shipping_policy.body != blank -%}
-                {{ 'products.page.shipping_policy_html' | t: link: shop.shipping_policy.url }}
-              {%- endif -%}
-            </div>
-          {% endif %}
-        {%- endif -%}
-      {% endif %}
+			</span>
+
+      <span class="product__sku hidden">{{ variant.sku | ecsape }}</span>
+
+      {% if section.settings.show_tax_info %}
+        {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
+          <div class="product-policies" data-product-policies>
+            {% if shop.taxes_included %}
+              {{ 'products.page.include_taxes' | t }}
+            {%- endif -%}
+            {%- if shop.shipping_policy.body != blank -%}
+              {{ 'products.page.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+            {%- endif -%}
+          </div>
+        {% endif %}
+      {%- endif -%}
 
 		</header>
 
@@ -147,8 +159,6 @@
 
         <div id="add-to-cart-{{ section.id }}" class="product__form" data-type="{{ settings.cart_action }}">
 
-
-          {% if product.price > 0 %}
 	       	<form
 					  action="/cart/add"
 					  method="post"
@@ -228,14 +238,12 @@
 
             </div>
 
+            {%- render 'featured-in-badge', classes: '' -%}
 					</form>
-          {% endif %}
 
 				</div>
 
 			</div>
-
-      {%- render 'liking-badge', product: product -%}
 
       <div class="product__description {{ section.settings.product_description_truncated }}">
         <div>
@@ -303,12 +311,15 @@
   {% endunless %}
 
 </article>
-
-{% render 'klevu-product-recommendations' %}
   
 {% if section.settings.show_reviews %}
-  <div class="product-page-reviews" id="shopify-product-reviews">
-    {%- include "reviewsio-product-reviews-widget" -%}
+  <div class="product-page-reviews">
+    <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+    <style type="text/css">
+      #shopify-product-reviews .spr-reviews .spr-pagination-next a:after {
+        content: "{{ 'products.page.loading_reviews' | t }}";
+      }
+    </style>
   </div>
 {% endif %}
 

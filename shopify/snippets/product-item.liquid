@@ -22,80 +22,6 @@
   {% assign aspect_ratio = settings.grid_aspect %}
 {% endif %}
 
-{% capture badges_capture %}
-{% unless blank_product %}
-
-      {% if sold_out %}
-        
-        <span class="product-item__badge product-item__badge--sold"><span>{{ 'products.grid.sold_out_product' | t }}</span></span>
-
-      {% elsif on_sale %}
-
-        {% if settings.grid_discount == 'percentage' %}
-          {%- assign discount_percentage = 0 -%}
-          {%- for variant in product.variants -%}
-            {%- if variant.compare_at_price > variant.price -%}
-              {%- assign variant_discount = variant.price | times: 100.0 | divided_by: variant.compare_at_price | minus: 100 | abs | round -%}
-              {%- if variant_discount > discount_percentage -%}
-                {%- assign discount_percentage = variant_discount -%}
-              {%- endif -%}
-              {%- capture variable_discount_list -%}
-                {%- if variable_discount_list -%}
-                  {{ variable_discount_list | append: ':' | append: variant_discount }}
-                {%- else -%}
-                  {{ variable_discount_list | append: variant_discount }}
-                {%- endif -%}
-              {%- endcapture -%}
-            {%- else -%}
-              {%- capture variable_discount_list -%}
-                {%- if variable_discount_list -%}
-                  {{ variable_discount_list | append: ':' | append: 0 }}
-                {%- else -%}
-                  {{ variable_discount_list | append: 0 }}
-                {%- endif -%}
-              {%- endcapture -%}
-            {%- endif -%}
-          {%- endfor -%}
-          {%- assign variable_discount_array = variable_discount_list | split: ':' -%}
-          {%- assign is_variable_discount = false -%}
-          {%- if variable_discount_array.size > 1 -%}
-            {%- assign var_item = variable_discount_array[0] -%}
-            {%- for item in variable_discount_array -%}
-              {%- if var_item != item -%}
-                {%- assign is_variable_discount = true -%}
-                {%- break -%}
-              {%- endif -%}
-            {%- endfor -%}
-          {%- endif -%}
-          {%- for tag in product.tags -%}
-            {%- if tag contains 'fake-discount' -%}
-              {%- assign fake_discount = tag | split: ':' -%}
-              {%- assign fake_discount_tag = fake_discount | first -%}
-              {%- assign fake_discount_value = fake_discount | last -%}
-              {%- if fake_discount_value -%}
-                {%- assign discount_percentage = fake_discount_value -%}
-                {%- break -%}
-              {%- endif -%}
-            {%- endif -%}
-          {%- endfor -%}
-          <span class="product-item__badge product-item__badge--sale"><span>{% if is_variable_discount %}{{ 'products.grid.from' | t }} {% else %}-{% endif %}{{ discount_percentage }}%</span></span>
-        {% else %}
-          <span class="product-item__badge product-item__badge--sale"><span>{{ 'products.grid.on_sale_product' | t }}</span></span>
-        {% endif %}
-
-      {% elsif product.tags contains 'preorder' %}
-
-        <span class="product-item__badge product-item__badge--preorder"><span>{{ 'products.grid.preorder_product' | t }}</span></span>
-
-      {% elsif product.tags contains 'new' %}
-
-        <span class="product-item__badge product-item__badge--new"><span>{{ 'products.grid.new_product' | t }}</span></span>
-
-      {% endif %}
-
-    {% endunless %}
-{% endcapture %}
-
 <div class="product-item {% if product.tags contains 'featured' and settings.grid_enhance_featured_product and template != 'search' %} featured {% endif %}">
 
   <a href="{{ product.url | within: collection }}" >
@@ -128,10 +54,7 @@
           </div>
 
         {% endif %}
-        <div class="product-item__badge-container">
-          {{ badges_capture }}
-          {%- render 'concern-badge', product: product -%}
-        </div>
+
       </div>
 
     {% endif %}
@@ -209,13 +132,46 @@
 
       {% if settings.show_reviews_badge %}
         <span class="product-item__reviews">
-          <div class="ruk_rating_snippet" data-sku="{{ product.handle }};{{ product.variants | map: 'sku' | join: ';' }};{{ product.variants | map: 'id' | join: ';' }}"></div>
+          <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
         </span>
       {% endif %}
 
     </div>
 
-    
+    {% unless blank_product %}
+
+      {% if sold_out %}
+        
+        <span class="product-item__badge product-item__badge--sold"><span>{{ 'products.grid.sold_out_product' | t }}</span></span>
+
+      {% elsif on_sale %}
+
+        {% if settings.grid_discount == 'percentage' %}
+          {%- assign discount_percentage = 0 -%}
+          {%- for variant in product.variants -%}
+            {%- if variant.compare_at_price > variant.price -%}
+              {%- assign variant_discount = variant.price | times: 100.0 | divided_by: variant.compare_at_price | minus: 100 | abs | round -%}
+              {%- if variant_discount > discount_percentage -%}
+                {%- assign discount_percentage = variant_discount -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          <span class="product-item__badge product-item__badge--sale"><span>{{ 'products.grid.from' | t }} {{ discount_percentage }}%</span></span>
+        {% else %}
+          <span class="product-item__badge product-item__badge--sale"><span>{{ 'products.grid.on_sale_product' | t }}</span></span>
+        {% endif %}
+
+      {% elsif product.tags contains 'preorder' %}
+
+        <span class="product-item__badge product-item__badge--preorder"><span>{{ 'products.grid.preorder_product' | t }}</span></span>
+
+      {% elsif product.tags contains 'new' %}
+
+        <span class="product-item__badge product-item__badge--new"><span>{{ 'products.grid.new_product' | t }}</span></span>
+
+      {% endif %}
+
+    {% endunless %}
 
   </a>
 

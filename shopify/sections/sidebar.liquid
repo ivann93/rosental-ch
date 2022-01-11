@@ -46,11 +46,10 @@
 				{% if section.settings.show_search %}
 					<span class="sidebar__search-handle">
 						<span class="icon icon-search" aria-hidden="true">{% render 'theme-symbols', icon: 'search' %}</span>
-						<span class="icon icon-search-close" aria-label="{{ 'general.close' | t }}" aria-hidden="true">{% render 'theme-symbols', icon: 'close' %}</span>
 					</span>
 				{% endif %}
 
-				<a href="javascript:void(0);" x-bind:href="'{{ routes.cart_url }}'" class="sidebar__cart-handle{% if cart.item_count > 0 %} sidebar__cart-handle--has-items{% endif %}" aria-label="{{ 'cart.title' | t }}" title="{{ 'cart.title' | t }}" id="cart_trigger"
+				<a href="javascript:void(0);" x-bind:href="'{{ routes.cart_url }}'" class="sidebar__cart-handle" aria-label="{{ 'cart.title' | t }}" title="{{ 'cart.title' | t }}" id="cart_trigger"
 					x-data="{usedKeyboard: false}"
 					@keydown.window.tab="usedKeyboard = true"
 					@click="$dispatch('open-cart', { open: true }); return false;"
@@ -92,8 +91,6 @@
 	</div>
 
 
-	{% include 'exposed-menu' -%}
-	
 </div>
 
 

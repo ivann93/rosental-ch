@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="{{ locale }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
   <head>
-    {%- render 'elevar-head' -%}
+
+
     {% if shop.permanent_domain == 'rosental-de.myshopify.com' %}
       {% include "gtm-head" %}
       <script src="https://www.googleoptimize.com/optimize.js?id=OPT-5WCVWKZ"></script>
     {% endif %}
-    <script type="text/javascript" src="https://try.abtasty.com/257d66e320a9f11d907e9fe4237e5238.js"></script>
+
     {% include 'hotjar' %}
     
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -31,9 +32,10 @@
     {{ checkout_scripts }}
     {% include "loyaltylion" %}
 <script>lion.configure({ checkout: true })</script>
+<!-- ADDRESS VALIDATOR -->
+<script async src="https://d3ox8tdk614ykk.cloudfront.net/pobox_checker.js"></script>
 </head>
   <body>
-    {%- render 'elevar-checkout-end' -%}
     {% if shop.permanent_domain == 'rosental-de.myshopify.com' %}
       {% include "gtm-checkout" %}
     {% endif %}
@@ -174,7 +176,7 @@
                 valid = false;
               }
             } else if (check == 'houseNo') {
-              var address1Matches = input.matchAll(/^[ \-a-zÖÜÄüößäàáÀÁéÈÉA-Z0-9.']+\s+(\d+(\s?\w$)?)/gm);
+              var address1Matches = input.matchAll(/^[ \-a-züößäàáÀÁéÈÉA-Z0-9.]+\s+(\d+(\s?\w$)?)/gm);
               
               var matched = false;
               for (var match of address1Matches) {
@@ -253,5 +255,11 @@
         });
       } 
     </script>
+    <script>
+      console.log('checkout');
+      $(document).on("page:load page:change", function(e) {
+        console.log('checkout onload, onchange');
+        });
+      </script>
   </body>
 </html>

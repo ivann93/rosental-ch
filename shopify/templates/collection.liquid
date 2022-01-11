@@ -89,36 +89,5 @@
 
 </script>
 
-<script type="text/javascript">
-
-  function initFilterSortApply() {
-
-    $(function(){
-
-      $('#apply-sort-filter').on('click', function(){
-        if ( window.KingdomCollectionFilter['sort'] != '' ) {
-          if ( window.KingdomCollectionFilter['pathname'].indexOf('sort_by') >= 0 ) {
-            window.KingdomCollectionFilter['pathname'] = window.KingdomCollectionFilter['pathname'].replace(/sort_by=.+/g, 'sort_by=' + window.KingdomCollectionFilter['sort']);
-          } else {
-            window.KingdomCollectionFilter['pathname'] = window.KingdomCollectionFilter['pathname'] + ( window.KingdomCollectionFilter['pathname'].indexOf('?') >= 0 ? '&' : '?' ) + 'sort_by=' + window.KingdomCollectionFilter['sort'];
-          }
-          
-        } else {
-          // empty
-        }
-        document.location.href =  window.KingdomCollectionFilter['pathname'];
-      });
-
-      $('#clear-sort-filter').on('click', function(){
-        document.location.href = document.location.origin + '{{ routes.collections_url }}/' + $('.collection__filters').data('collection-handle');
-      });
-
-    });
-
-  }
-
-  initFilterSortApply();
-
-</script>
 {% endcapture %}
 {% include 'password-protect' %}

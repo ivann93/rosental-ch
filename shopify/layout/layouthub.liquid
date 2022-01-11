@@ -10,9 +10,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="canonical" href="{{ canonical_url }}">
-  {%- if shop.permanent_domain == 'rosental-de.myshopify.com' -%}
-    {%- include "gtm-head" -%}
-  {%- endif -%}
   {%- render 'layouthub_header' -%}
   {%- if settings.favicon != blank -%}
     <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
@@ -103,9 +100,6 @@
 </head>
 
 <body class="template-{{ template | split: '.' | first }}">
-  {%- if shop.permanent_domain == 'rosental-de.myshopify.com' -%}
-		{% include "gtm-body" %}
-	{%- endif -%}
   <div class="layouthub">
     {{ content_for_layout }}
   </div>

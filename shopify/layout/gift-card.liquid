@@ -11,9 +11,7 @@
 	{% endif %}
 
 	<title>{{ shop.name | escape }}</title>
-  {%- if shop.permanent_domain == 'rosental-de.myshopify.com' -%}
-    {%- include "gtm-head" -%}
-  {%- endif -%}
+
   {% if page_description %}
     <meta name="description" content="{{ page_description | escape }}">
   {% endif %}
@@ -40,9 +38,7 @@
 </head>
 
 <body class="template-gift-card no-touch">
-	{%- if shop.permanent_domain == 'rosental-de.myshopify.com' -%}
-		{% include "gtm-body" %}
-	{%- endif -%}
+	
 	{{ content_for_layout }}
 
 </body>
