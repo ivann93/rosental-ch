@@ -1,0 +1,5 @@
+{%- capture translation_key -%}badge.{{ badge_type }}{%- endcapture -%}
+<div class="Badge" data-ros-11="variant" style="--display: inline-flex;">
+  {%- render 'badge-icon' with badge_type -%}
+  <span class="Badge__Text">{{ translation_key | t }}</span>
+</div>

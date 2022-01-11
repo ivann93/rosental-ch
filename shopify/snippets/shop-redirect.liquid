@@ -1,0 +1,9 @@
+<script>
+  // Redirect all /shop sessions to /collections/all
+  if (window.location !== undefined) {
+    var pathname = window.location.pathname;
+    if (pathname == '/shop') {
+      window.location.href = window.location.protocol + "//" + window.location.hostname + '/collections/all';
+    }
+  }
+</script>

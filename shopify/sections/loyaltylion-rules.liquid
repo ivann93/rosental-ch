@@ -1,0 +1,42 @@
+{% schema %}
+  {
+    "name": "Loyaltylion Rules",
+    "tag": "section",
+    "settings": [
+      {
+        "id": "enabled",
+        "type": "checkbox",
+        "label": "Enable",
+        "info": "Display this section",
+        "default": false
+      },
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Heading",
+        "default": "Ganz einfach Karma Punkte sammeln!☯️"
+      },
+      {
+        "id": "description",
+        "type": "textarea",
+        "label": "Text",
+        "default": "Durch das Einkaufen in unserem Shop oder durch viele weitere Activities, kannst du ganz easy Punkte sammeln und sie bei deiner nächsten Bestellung direkt gegen einen Gutschein tauschen!"
+      }
+    ]
+  }
+{% endschema %}
+{%- if section.settings.enabled -%}
+<div class="loyaltylion-rules-section">
+  <div class="login-section__inner text-center">
+    {%- if section.settings.title != "" -%}
+      <h2 class="login-h2">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    {%- if section.settings.description != "" -%}
+      <p>{{ section.settings.description }}</p>
+    {%- endif -%}
+    <div data-lion-rules-list></div>
+  </div>
+</div>
+{%- endif -%}
+
+

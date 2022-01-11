@@ -1,0 +1,18 @@
+.discount_applied_text {
+  display: none;
+}
+.discount_applied {
+  display: block;
+  color: #81d6c0;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  font-size: 1.2em;
+}
+
+.discount_applied .discount_applied_text {
+  display: block;
+}
+
+/* 1E1F21 */

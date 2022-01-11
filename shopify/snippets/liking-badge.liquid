@@ -1,0 +1,41 @@
+{%- assign show_liking_badge = false -%}
+{%- for tag in product.tags -%}
+  {%- if tag contains 'liking-badge-v' -%}
+    {%- assign show_liking_badge = true -%}
+    {%- assign liking_badge_version = tag -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if show_liking_badge -%}
+{%- assign liking_badge_name = "Jessica Paszka" -%}
+{%- assign liking_badge_likes_initial = 16564 -%}
+{%- assign liking_badge_wording = 'nutzen unser Bakuchiol Serum gegen unreine Haut.' -%}
+{%- if liking_badge_version contains 'liking-badge-v2' -%}
+  {%- assign liking_badge_likes_initial = 15582 -%}
+  {%- assign liking_badge_wording = 'nutzen dieses Set gegen Fältchen.' -%}
+{%- elsif liking_badge_version contains 'liking-badge-v3' -%}
+  {%- assign liking_badge_likes_initial = 14963 -%}
+  {%- assign liking_badge_wording = 'nutzen dieses Set gegen Fältchen & unreine Haut.' -%}
+{%- elsif liking_badge_version contains 'liking-badge-v4' -%}
+  {%- assign liking_badge_likes_initial = 17147 -%}
+  {%- assign liking_badge_wording = 'nutzen dieses Set für den perfekten Glow.' -%}
+{%- elsif liking_badge_version contains 'liking-badge-v5' -%}
+  {%- assign liking_badge_likes_initial = 11159 -%}
+  {%- assign liking_badge_wording = 'nutzen dieses Set gegen trockene Haut.' -%}
+{%- endif -%}
+{%- assign value_multiplier = 3 -%}
+
+{%- assign days = 365 -%}
+{%- assign current_year = "now" | date: '%Y' -%}
+{%- assign day_of_year = "now" | date: '%j' -%}
+{%- assign year_multiplier = current_year | minus: 2021 -%}
+{%- assign years_in_days = days | times: year_multiplier -%}
+{%- assign likes_multiplier = day_of_year | plus: years_in_days | times: value_multiplier -%}
+{%- assign liking_badge_likes = liking_badge_likes_initial | plus: likes_multiplier -%}
+{% capture liking_badge_likes_formatted %}{{ liking_badge_likes | slice: 0, 2 }}.{{ liking_badge_likes | slice: 2, 3 }}{% endcapture %}
+
+<div class="liking-badge">
+  <p class="liking-badge__text"><img class="liking-badge__image" src="https://cdn.shopify.com/s/files/1/0518/8619/4876/files/liking-badge-profile.jpg?v=1632832245" alt="Jessica Paszka"><strong>{{ liking_badge_name }}</strong><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="48px" height="48px"><polygon fill="#42a5f5" points="29.62,3 33.053,8.308 39.367,8.624 39.686,14.937 44.997,18.367 42.116,23.995 45,29.62 39.692,33.053 39.376,39.367 33.063,39.686 29.633,44.997 24.005,42.116 18.38,45 14.947,39.692 8.633,39.376 8.314,33.063 3.003,29.633 5.884,24.005 3,18.38 8.308,14.947 8.624,8.633 14.937,8.314 18.367,3.003 23.995,5.884"/><polygon fill="#fff" points="21.396,31.255 14.899,24.76 17.021,22.639 21.428,27.046 30.996,17.772 33.084,19.926"/></svg> und <strong><span class="liking-badge__count">{{ liking_badge_likes_formatted }}</span> weitere Kundinnen</strong> {{ liking_badge_wording }}</p>
+</div>
+{%- endif -%}

@@ -1,0 +1,38 @@
+{% schema %}
+  {
+    "name": "Login Contact",
+    "tag": "section",
+    "class": "login-contact-section",
+    "settings": [
+      {
+        "id": "enabled",
+        "type": "checkbox",
+        "label": "Enable",
+        "info": "Display this section",
+        "default": false
+      },
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Heading",
+        "default": "Hast du Fragen zum Rosental Karma Club?"
+      },
+      {
+        "id": "description",
+        "type": "textarea",
+        "label": "Text",
+        "default": "Kontaktiere uns, wir sind für dich da!"
+      }
+    ]
+  }
+{% endschema %}
+{%- if section.settings.enabled -%}
+<div class="login-section__inner text-center">
+  {%- if section.settings.title != "" -%}
+    <h2 class="login-h2">{{ section.settings.title }}</h2>
+  {%- endif -%}
+  {%- if section.settings.description != "" -%}
+    <p>{{ section.settings.description }}</p>
+  {%- endif -%}
+</div>
+{%- endif -%}

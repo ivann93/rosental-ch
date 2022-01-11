@@ -1,0 +1,48 @@
+/*.slider--scroll .slide__title {
+  @apply mt-0
+}*/
+.slider--scroll .slide__title span {
+  @apply bg-black text-white font-medium px-3 py-2;
+}
+
+.slider--scroll .slide {
+  cursor: pointer;
+}
+
+/*.slide__button {
+  @apply mt-0
+}*/
+
+.slide__text.horizontal-center {
+  justify-content: center;
+  text-align: center;
+}
+
+@media screen and (max-width: 948px) {
+  .slide__text.mobile-horizontal-left {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .slide__text.mobile-horizontal-center {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .slide__text.mobile-horizontal-right {
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .slide__text.mobile-vertical-top {
+    align-items: flex-start;
+  }
+
+  .slide__text.mobile-vertical-middle {
+    align-items: center;
+  }
+
+  .slide__text.mobile-vertical-bottom {
+    align-items: flex-end;
+  }
+}

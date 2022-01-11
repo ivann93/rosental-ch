@@ -1,0 +1,165 @@
+.home-page-signup-section {
+  display: flex;
+  flex-flow: column nowrap;
+  margin-bottom: 70px;
+}
+.signup-section__image-container,
+.signup-section__form-container {
+}
+.signup-section__image-container {
+}
+
+.signup-section__form-container {
+  padding: 0 20px;
+  background-color: #FBE5ED;
+  text-align: center;
+}
+
+.signup-section__preheading {
+  display: inline-block;
+  padding: 10px 50px;
+  background-color: #1e1f21;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  transform: translateY(-50%);
+}
+.signup-section__heading {
+  margin: 0.5em 0;
+  color: #262626;
+  
+  line-height: 1;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.signup-section__subheading {
+  margin: 0.5em 0;
+  color: #000;
+  font-size: 1.6rem;
+  line-height: 1;
+  font-weight: 200;
+  
+}
+.signup-section__klaviyo_form_wrapper * {
+  color: rgba(var(--color-body-txt), 1) !important;
+
+}
+.signup-section__klaviyo_form_wrapper form {
+  /* max-width: none !important; */
+  margin: 0 auto;
+}
+
+.signup-section__klaviyo_form_wrapper form input,
+.signup-section__klaviyo_form_wrapper form button {
+  box-sizing: border-box !important;
+  align-self: stretch !important;
+  /*font-size: 1.2rem !important;*/
+  height: auto !important;
+  line-height: 1 !important;
+  padding: 0.5em !important;
+  margin-bottom: 0.5em !important;
+}
+
+.signup-section__klaviyo_form_wrapper form input {
+  flex: 1 0 auto;
+  width: 100% !important;
+  border: 1px solid rgb(124, 101, 106) !important;
+  text-transform: none !important;
+}
+.signup-section__klaviyo_form_wrapper form button {
+  width: 100%;
+  background: #1e1f21 !important;
+  border: none !important;
+  color: #fff !important;
+  border-radius: 0 !important;
+  text-transform: none !important;
+}
+
+/* button wrapper */
+.DRIOS.DRIOS {
+  flex: 0 0 120px !important;
+}
+
+/* column */
+.signup-section__klaviyo_form_wrapper .bfAJHs {
+  flex-direction: row !important;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* row */
+.signup-section__klaviyo_form_wrapper .fMxCHz.fMxCHz {
+  width: 100%;
+}
+
+/* .signup-section__klaviyo_form_wrapper .fMxCHz:nth-child(1),
+.signup-section__klaviyo_form_wrapper .fMxCHz:nth-child(2) {
+  width: 50%;
+} */
+
+.signup-section__klaviyo_form_wrapper .fMxCHz:nth-child(1) {
+}
+.signup-section__klaviyo_form_wrapper .fMxCHz:nth-child(2) {
+}
+
+.signup-section__klaviyo_form_wrapper .gihcbd,
+.signup-section__klaviyo_form_wrapper .DRIOS {
+  padding: 0 !important;
+}
+
+@media screen and (max-width: 948px) {
+  /* .signup-section__klaviyo_form_wrapper .fMxCHz:nth-child(1),
+  .signup-section__klaviyo_form_wrapper .fMxCHz:nth-child(2) {
+    transform: translateX(20px);
+  } */
+  .signup-section__klaviyo_form_wrapper .dUoLAQ .ql-editor {
+    text-align: center !important;
+  }
+  .signup-section__klaviyo_form_wrapper form input {
+    margin-left: auto !important;
+  }
+  .signup-section__klaviyo_form_wrapper form button {
+    margin-right: auto !important;
+  }
+}
+@media screen and (min-width: 949px) {
+  .home-page-signup-section {
+    display: flex;
+    flex-flow: row nowrap;
+    margin-bottom: 100px;
+  }
+  .signup-section__image-container {
+    overflow: hidden;
+    /* flex-basis: 70%; */
+    flex-basis: 65%;
+  }
+  .signup-section__image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .signup-section__form-container {
+    padding: 50px;
+    /* flex-basis: 30%; */
+    flex-basis: 35%;
+    text-align: left;
+  }
+
+  .signup-section__klaviyo_form_wrapper form {
+    padding: 2rem 0 !important;
+  }
+
+  .signup-section__preheading {
+    transform: translate(-50px, 0);
+    padding: 5px 20px 5px 50px;
+    font-size: 1.3rem;
+  }
+
+  .signup-section__klaviyo_form_wrapper {
+  }
+
+  .signup-section__klaviyo_form_wrapper .bfAJHs {
+    align-items: flex-start;
+  }
+}

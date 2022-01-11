@@ -1,0 +1,55 @@
+/* loyaltylion-custom-rewards-styles.liquid replaces this css (generates the same css but via settings */
+/* #loyaltylion
+  .lion-reward-item:not(.lion-reward-item--checkout-redemption)
+  .lion-reward-item__content {
+  justify-content: flex-start;
+}
+#loyaltylion
+  .lion-reward-item:not(.lion-reward-item--checkout-redemption)
+  .lion-reward-item__icon {
+  content: '';
+  display: block;
+  height: 230px;
+  width: 100%;
+}
+
+#loyaltylion .lion-reward-item .lion-icon__reward--product-discount-voucher,
+#loyaltylion .lion-reward-item .lion-icon__reward--cart-discount-voucher {
+  margin: 0 auto;
+  mask: none;
+}
+#loyaltylion
+  .lion-reward-item[data-reward-id='115032']
+  .lion-reward-item__icon {
+  background: url(https://cdn.shopify.com/s/files/1/0518/8619/4876/files/shop_clean_af_Einzeln_reward.png)
+    no-repeat center;
+  background-size: contain;
+}
+#loyaltylion
+  .lion-reward-item[data-reward-id='115221']
+  .lion-reward-item__icon {
+  background: url(https://cdn.shopify.com/s/files/1/0518/8619/4876/files/freeblender_39f84830-966b-4858-bf90-d3d5f4fe6895.jpg?v=1621543319)
+    no-repeat center;
+  background-size: contain;
+}
+#loyaltylion
+  .lion-reward-item[data-reward-id='115222']
+  .lion-reward-item__icon {
+  background: url(https://cdn.shopify.com/s/files/1/0518/8619/4876/files/freepads_ca2765f7-2068-4594-8bef-4647c7892cba.jpg?v=1621543319)
+    no-repeat center;
+  background-size: contain;
+}
+#loyaltylion
+  .lion-reward-item[data-reward-id='111864']
+  .lion-reward-item__icon {
+  background: url(https://cdn.shopify.com/s/files/1/0518/8619/4876/files/gutschein2.png?v=1621277530)
+    no-repeat center;
+  background-size: contain;
+}
+#loyaltylion
+  .lion-reward-item[data-reward-id='111865']
+  .lion-reward-item__icon {
+  background: url(https://cdn.shopify.com/s/files/1/0518/8619/4876/files/gutschein1.png?v=1621277517)
+    no-repeat center;
+  background-size: contain;
+} */

@@ -1,0 +1,268 @@
+#shopify-section-mobile-nav {
+  /* display: none; */
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+
+  background-color: rgba(0, 0, 0, 0.7);
+  transition: all 0.3s ease-in-out 0.3s;
+}
+@media screen and (max-width: 948px) {
+  #shopify-section-mobile-nav.opened {
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.3s ease-in-out 0s;
+  }
+}
+.mobile__sidebar {
+  width: calc(100% - 48px);
+  max-width: 400px;
+
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+
+  overflow-y: auto;
+  background-color: #fff;
+
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+#shopify-section-mobile-nav.opened .mobile__sidebar {
+  transform: translateX(0%);
+}
+.mobile-separator {
+  background: #f2f2f2;
+  width: 100%;
+  border: 1px solid #d5d5d5;
+  border-left: none;
+  border-right: none;
+  padding-top: 3px;
+}
+.mobile__heading {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 4%;
+}
+.mobile__heading .language__selector {
+}
+.mobile__heading .mobile__link {
+}
+.mobile__heading .mobile__link svg {
+  display: inline-block;
+  margin-right: 0.4em;
+}
+.mobile__link {
+  font-weight: 600;
+}
+.mobile__primary-menu-bg {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+}
+.mobile__menu {
+  position: relative;
+  font-weight: 500;
+}
+.mobile-nav-level-1 {
+  position: relative;
+  font-weight: 700;
+  background: #aaa;
+  /* padding-top: 28.5%; */
+  padding-top: 80px;
+}
+.mobile-nav-level-1.has-mobile-bg-image {
+  padding-top: 0;
+  background: transparent;
+  border-radius: none;
+}
+
+.mobile-nav-level-1 ul {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 1rem;
+
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.mobile-nav-level-1 ul::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-nav-level-1 li {
+  display: block;
+  width: 50%;
+  text-align: center;
+
+  flex: 0 0 auto;
+}
+.mobile-nav-level-1 li.active > a {
+  text-decoration: underline;
+}
+.mobile-nav-level-1 a {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  color: #fff;
+  font-size: 1rem;
+}
+.mobile-nav-level-2 {
+  padding: 0.5rem 1rem;
+  font-size: 1.1rem;
+}
+.mobile-nav-level-2 ul {
+  display: none;
+}
+.mobile-nav-level-2 a {
+  display: block;
+  position: relative;
+  padding: 0.5rem 2.5rem 0.5rem 0;
+  font-weight: 600;
+}
+.mobile-nav-level-2 a img {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 10%;
+  bottom: 0;
+  height: 90%;
+  width: auto;
+}
+.mobile-nav-level-2 ul.mobile__tab--active {
+  display: block;
+}
+.mobile__highlights {
+  padding: 5%;
+  font-size: 1rem;
+}
+.highlights__block {
+  margin-bottom: 3%;
+}
+.highlights__title {
+  font-weight: 700;
+}
+.highlights__item-link {
+  display: block;
+  position: relative;
+  background: #aaa;
+  /* padding-top: 50%; */
+  padding-top: 140px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.highlights__item-link.has-hightlights-image {
+  padding-top: 0;
+  background: transparent;
+  /* border-radius: none; */
+}
+.highlights__item-image {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+.highlights__item-title {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+
+  text-align: center;
+  color: #fff;
+  font-weight: 700;
+}
+.mobile__footer {
+}
+.mobile__footer-menu {
+  margin: 2rem auto;
+  text-align: center;
+}
+.mobile__footer-menu li {
+  display: inline-block;
+  margin: 0 0.5rem;
+}
+.mobile__footer-menu a {
+  display: block;
+  color: #aaa;
+  font-size: 0.8rem;
+  line-height: 1;
+  padding: 0.5rem;
+}
+.support-link {
+  display: inline-block;
+  margin: 1rem auto;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+.mobile__social-nav {
+  text-align: center;
+}
+.mobile__social-nav li {
+  display: inline-block;
+  margin: 0 0.25rem;
+}
+.mobile__social-nav a {
+  display: block;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.mobile__payment-icons {
+  margin: 5%;
+  text-align: center;
+}
+.mobile__payment-icons svg {
+  display: inline-block;
+  margin: 0.1rem 0.1rem 0.1rem 0;
+}
+.mobile__close {
+  position: absolute;
+  top: 0;
+  left: 400px;
+
+  fill: #fff;
+  width: 3rem;
+  height: 3rem;
+
+  transform: translateX(-400px);
+  transition: transform 0.3s ease;
+}
+#shopify-section-mobile-nav.opened .mobile__close {
+  transform: translateX(0);
+}
+@media screen and (max-width: 448px) {
+  .mobile__close {
+    left: calc(100% - 48px);
+  }
+}
+
+.mobile__close svg {
+  width: 100%;
+  height: 100%;
+  transform: scale(1.3);
+}
+
+/* sticky close button */
+/* .mobile__close {
+  position: sticky;
+  bottom: 0;
+  display: block;
+  padding: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  background: #f2f2f2;
+} */

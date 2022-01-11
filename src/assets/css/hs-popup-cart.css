@@ -1,0 +1,62 @@
+.hs-popup-cart-sp-load .hs-site-cart-popup .hs-close-popup-cart h2 {
+  font-weight: normal !important;
+}
+
+.hs-text-free-shipping {
+  font-weight: normal !important; 
+}
+
+@media screen and (max-width: 769px) {
+  .hs-sub-total-cart {
+    white-space: nowrap !important;
+  }
+
+  
+  .hs-sub-total-cart .hs-text-subtotal,
+  .hs-sub-total-cart .hs-mount-sub-total span {
+    font-size: 15px !important;
+  }
+
+  .hs-sub-total-cart .hs-mount-sub-total span {
+    display: inline-block !important;
+  }
+}
+
+@media screen and (max-width: 948px) {
+  .hs-drawer-content-checkout {
+    padding-bottom: 20px !important;
+  }
+}
+
+.hs-progess-content .hs-progress-indicator {
+  font-weight: normal !important; 
+}
+
+.hs-popup-cart-sp-load .hs-site-cart-popup form .hs-sub-total-cart .hs-text-subtotal {
+  font-weight: normal !important
+}
+
+.hs-popup-cart-sp-load .hs-site-cart-popup form .hs-finalize-purchase .hs-checkout-purchase {
+  font-weight: normal !important;
+}
+
+.hs-popup-cart-sp-load .hs-site-cart-popup form .hs-sub-total-cart span {
+  font-weight: normal !important;
+}
+
+.hs-finalize-purchase .hs-continue-shopping {
+  font-weight: normal !important;
+}
+
+.hs-progress-indicator {
+  font-weight: normal !important; 
+}
+
+.hs-count-products-cart {
+  font-weight: normal !important;
+}
+
+.hs-popup-cart-sp-load .hs-site-cart-popup form .hs-sticky-cart .hs-item-cart-content .hs-item-cart-description .hs-product-title {
+  font-weight: normal !important;
+  text-transform: none !important;
+}

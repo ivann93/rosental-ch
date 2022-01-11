@@ -1,0 +1,76 @@
+{% schema %}
+  {
+    "name": "Login Rewards",
+    "tag": "section",
+    "class": "login-rewards",
+    "max_blocks": 4,
+    "settings": [
+      {
+        "id": "enabled",
+        "type": "checkbox",
+        "label": "Enable",
+        "info": "Display this section",
+        "default": false
+      },
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Heading",
+        "default": "Du hast dir eine Belohnung verdient!"
+      },
+      {
+        "id": "description",
+        "type": "textarea",
+        "label": "Add custom text below",
+        "default": "Sammle Karma Punkte und erhalte Gutscheine, die du direkt an der Kasse einlösen kannst, wenn du deine Beauty-Lieblinge bestellst!"
+      },
+      {
+        "id": "enable_rewards",
+        "type": "checkbox",
+        "label": "Enable loyaltylion rewards snippet",
+        "default": false
+      }
+    ],
+    "blocks": [
+      {
+        "type": "images",
+        "name": "Images",
+        "settings": [
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image"
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Text"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+{%- if section.settings.enabled -%}
+<div class="login-section__inner text-center">
+  {%- if section.settings.title != "" -%}
+    <h2 class="login-h2">{{ section.settings.title }}</h2>
+  {%- endif -%}
+  {%- if section.settings.description != "" -%}
+    <p>{{ section.settings.description }}</p>
+  {%- endif -%}
+  {%- if section.settings.enable_rewards -%}
+    <div data-lion-rewards-list></div>
+  {%- endif -%}
+  {%- if section.blocks.size > 0 -%}
+    <div class="login-rewards__images">
+    {%- for block in section.blocks -%}
+      <div class="login-rewards__image-holder" {{ block.shopify_attributes }}>
+        <img src="{{ block.settings.image | img_url: 'master' }}">
+        <span>{{ block.settings.title }}</span>
+      </div>
+    {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+{%- endif -%}

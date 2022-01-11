@@ -1,0 +1,12 @@
+{% assign text_size = snippet_instance.settings.text_size %}
+<div class="content-section gutter--on heading heading--alignment-{{ snippet_instance.settings.alignment }} {% if section.settings.color_bg != 'rgba(0,0,0,0)' %} parent-has-inner-padding {% endif %}">
+
+  <div class="heading__content">
+
+    {% unless snippet_instance.settings.headline_text == blank %}
+      <h2 class="heading__title {% if text_size == 'regular' %} h1 {% elsif text_size == 'large' %} h0 {% else %} hh {% endif %}"><span>{{ snippet_instance.settings.headline_text | escape }}</span></h2>
+    {% endunless %}
+
+  </div>
+
+</div>

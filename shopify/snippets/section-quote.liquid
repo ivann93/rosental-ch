@@ -1,0 +1,40 @@
+{% assign id = snippet_instance.id %}
+{% assign quote = snippet_instance.settings.quote %}
+{% assign text_alignment = snippet_instance.settings.text_alignment %}
+<div id="id-{{ id }}" class="content-section gutter--on"> 
+
+  <div class="rich-text__quote-content" style="text-align: {{ text_alignment }}">
+
+    {% unless quote == blank %}
+      {% assign quote_parsed = quote | replace: "[[", '<span class="underlined">' %}
+      {% assign quote_parsed = quote_parsed | replace: "]]", "</span>" %}
+      <h2 class="rich-text__quote {% if text_size == 'regular' %} h1 {% elsif text_size == 'large' %} h0 {% else %} hh {% endif %}">{{ quote_parsed }}</h2>
+    {% endunless %} 
+
+  </div> 
+
+</div>
+
+{% style %}
+    #id-{{ id }} .rich-text__quote .underlined {
+      position: relative;
+    }
+    #id-{{ id }} .rich-text__quote .underlined:after {
+        content: '';
+        background-image: url(https://rosental.de/wp-content/uploads/2019/08/wave.svg);
+        background-size: cover;
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        filter: invert(93%) sepia(13%) saturate(494%) hue-rotate(105deg) brightness(93%) contrast(86%);
+        opacity: .3;
+    }
+
+    @media screen and (max-width: 948px) {
+      #id-{{ id }} .rich-text__quote-content {
+        margin-top: 10em;
+      }
+    }
+{% endstyle %}

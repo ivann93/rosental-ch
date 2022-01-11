@@ -1,0 +1,21 @@
+.atomic-storefront {
+  @apply pb-10;
+}
+
+.atomic-storefront form button {
+  background: rgba(var(--color-body-txt), 1);
+  color: rgba(var(--color-body-txt-foreground), 1);
+  font-weight: var(--font-weight-body-semibold);
+  border-width: 2px;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  padding: 0 25px;
+  line-height: 3;
+  transition: all 150ms linear;
+}
+
+.atomic-storefront form button:hover {
+  border-color: transparent;
+  background: rgba(var(--color-body-accent), 1) !important;
+  color: rgba(var(--color-body-accent-foreground), 1) !important;
+}

@@ -1,0 +1,40 @@
+{% assign id = snippet_instance.id %}
+{% assign image_left = block.settings.image_left %}
+{% assign image_right = block.settings.image_right %}
+<div id="id-{{ id }}" class="content-section lg:grid lg:grid-cols-2 lg:gap-8 px-5 mb-10">
+  {% unless image_left == blank%}
+    <div>
+      {% render 'lazy-image', image: image_left %}
+    </div>
+  {% endunless %}
+
+  
+  {% unless image_right == blank%}
+    <div>
+      {% render 'lazy-image', image: image_right %}
+    </div>
+    {% style %}
+      #id-{{ id }} .rich-text__media {
+        height: {{ image_height }};
+      }
+    {% endstyle %}
+  {% endunless %}
+
+</div>
+
+
+{% if image_width != blank %}
+  {% style %}
+    #id-{{ id }} .rich-text__media {
+      width: {{ image_width }}%;
+    }
+
+    @media screen and (max-width: 948px) {
+      #id-{{ id }} .rich-text__media {
+        width: 100%;
+        max-width: 90vw;
+        margin: 0 auto;
+      }
+    }
+  {% endstyle %}
+{% endif %}

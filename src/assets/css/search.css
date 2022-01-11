@@ -1,0 +1,353 @@
+body.search-visible {
+  overflow: hidden;
+}
+.klevu-search-enabled .sidebar__search {
+  position: fixed;
+  width: 100%;
+  top: 4rem;
+  bottom: auto;
+  right: 0;
+  left: 0;
+  height: auto;
+  transform: none;
+}
+
+.sidebar__search-handle .icon-search-close {
+  display: none;
+  height: 100%;
+  overflow: hidden;
+}
+.klevu-search-enabled .sidebar__search-handle .icon-search-close svg {
+  width: 100%;
+  height: auto;
+  transform: scale(2);
+}
+.klevu-search-enabled.search-visible .sidebar__search-handle .icon-search {
+  display: none;
+}
+.klevu-search-enabled.search-visible
+  .sidebar__search-handle
+  .icon-search-close {
+  display: block;
+}
+.klevu-search-enabled .sidebar__search > div {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: auto;
+  padding: 1.5rem 0;
+}
+.klevu-search-enabled .sidebar__search > div::after {
+  content: none;
+}
+.klevu-search-enabled .sidebar__search .search-form::after {
+  content: none;
+}
+
+body.klevu-search-enabled.show-announcement-bar .sidebar__search {
+  padding-top: 0;
+  top: 6rem;
+}
+.klevu-search-enabled .search__form-container input[type='search'] {
+  height: 2.8rem;
+  padding-left: 0.5rem;
+  border: 1px solid #000 !important;
+}
+.klevu-search-enabled
+  .search__form-container
+  input[type='search']::placeholder {
+  opacity: 0.7;
+}
+.ku-searchfield[type='search']::-webkit-search-decoration,
+.ku-searchfield[type='search']::-webkit-search-cancel-button,
+.ku-searchfield[type='search']::-webkit-search-results-button,
+.ku-searchfield[type='search']::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
+.klevu-search-enabled .search-form input[type='search'] + button {
+  opacity: 1;
+}
+.klevu-search-enabled .search__form-container button[type='submit'] {
+  top: 0;
+  height: 2.8rem;
+  width: 2.8rem;
+  padding: 0.5rem;
+  background: #000;
+  opacity: 1;
+}
+.klevu-search-enabled .sidebar__search .search-form path {
+  fill: #fff;
+}
+@media screen and (min-width: 949px) {
+  .klevu-search-enabled .sidebar__search {
+    top: 5rem;
+  }
+  body.klevu-search-enabled.show-announcement-bar .sidebar__search {
+    top: 7rem;
+  }
+}
+
+.klevu-search-enabled .sidebar__search.opened {
+  /* width: 100%;
+  top: 7rem;
+  bottom: auto;
+  right: 0;
+  left: 0; */
+  height: auto !important;
+  /* background: #ccc;
+  transform: none; */
+}
+
+.klevu-search-enabled .sidebar__search .search-form {
+  margin: 0 auto;
+}
+@media screen and (max-width: 948px) {
+  .klevu-search-enabled
+    .sidebar__search:not(.predictive-search)
+    .search-form
+    button[type='submit'] {
+    display: block;
+  }
+}
+
+/* klevu overrides */
+body .klevu-fluid .klevu-searching-area-l2 {
+  position: fixed;
+  left: 0 !important;
+  max-height: calc(100vh - 120px);
+  width: 100vw;
+  margin-top: 15px;
+  padding: 15px;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.02438rem;
+  line-height: 1.375rem;
+  border-color: #ddd;
+  border-radius: 0;
+  overflow: auto;
+  bottom: 0;
+}
+@media (min-width: 1201px) {
+  body .klevu-fluid .klevu-searching-area-l2 {
+    position: absolute;
+    margin-top: 20px;
+    padding: 25px calc((100vw - 1200px) / 2);
+    bottom: auto;
+  }
+}
+@media (min-width: 768px) {
+  body .klevu-fluid .klevuSuggestionsBlock {
+    display: flex;
+  }
+}
+@media (min-width: 1201px) {
+  body .klevu-fluid .klevuSuggestionsBlock {
+    display: block;
+    width: 16.5%;
+    float: left;
+    padding-left: 15px;
+  }
+}
+
+.klevuSuggestionHeading .klevuHeadingText {
+  padding: 0 !important;
+}
+.klevu-pt-rs-hover .klevu-pt-hover-box .klevu-pt-rs-keywords > a,
+.klevuAutoSuggestion-l2 ul#klevu_acList li a,
+.klevups-enabled.klevu-pt-rs-hover
+  .klevu-rs-hover-box
+  .klevu-pt-rs-keywords
+  > a {
+  padding-left: 8px;
+}
+.klevups-enabled.klevu-pt-rs-hover
+  .klevu-rs-hover-box
+  .klevu-pt-rs-keywords
+  > a {
+  font-weight: 700;
+}
+.klevu-pt-hover-box > strong {
+  text-transform: uppercase;
+}
+body .klevuAutoSuggestion-l2 {
+  border-bottom-color: transparent;
+}
+body .klevu-fluid .klevuSuggestionHeading .klevuHeadingText {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+  text-transform: uppercase;
+  color: #000;
+}
+body .klevu-fluid .klevuAutoSuggestion-l2 ul li {
+  margin: 8px 0;
+}
+body .klevuAutoSuggestion-l2 ul li a {
+  font-size: 1rem;
+  line-height: 1.25em;
+  font-weight: 300;
+}
+body .klevuAutoSuggestion-l2 ul li strong {
+  font-weight: 600;
+}
+@media (min-width: 1201px) {
+  body .klevu-fluid .klevuResultsBlock {
+    width: 83.5%;
+    float: left;
+    padding-right: 15px;
+  }
+}
+body .klevu-fluid .klevuSearchResults-l2 {
+  overflow-x: auto;
+}
+body .klevu-fluid .klevuSearchResults-l2 ul {
+  display: flex;
+  margin-top: 15px;
+}
+@media (min-width: 1201px) {
+  body .klevu-fluid .klevuSearchResults-l2 ul {
+    grid-gap: 20px 1rem;
+    grid-template-columns: repeat(5, 1fr);
+    display: grid;
+  }
+}
+
+body .klevu-fluid .klevuSearchResults-l2 ul li {
+  flex: 0 0 50%;
+  margin-right: 10px;
+  border-bottom: none;
+}
+
+@media (min-width: 768px) {
+  body .klevu-fluid .klevuSearchResults-l2 ul li {
+    flex: 0 0 33.3%;
+  }
+}
+
+@media (min-width: 901px) {
+  body .klevu-fluid .klevuSearchResults-l2 ul li {
+    flex: 0 0 20%;
+  }
+}
+@media (min-width: 1201px) {
+  body .klevu-fluid .klevuSearchResults-l2 ul li {
+    margin-right: 0;
+  }
+}
+
+body .klevu-fluid .klevuSearchResults-l2 .klevu-result-box-l2 {
+  padding: 0;
+}
+body .klevu-fluid .klevuSearchResults-l2 .klevu-img-wrap-l2 {
+  width: 100% !important;
+  height: auto !important;
+}
+body .klevu-fluid .klevuSearchResults-l2 .klevu-img-wrap-l2 img {
+  max-height: none !important;
+  margin-top: 0;
+}
+body .klevu-fluid .klevuSearchResults-l2 .klevu-name-desc-l2 {
+  width: 100%;
+  margin: 0;
+}
+@media (min-width: 901px) {
+  body .klevu-fluid .klevuSearchResults-l2 .klevu-name-desc-l2 {
+    text-align: center;
+  }
+}
+body .klevu-fluid .klevuSearchResults-l2 .klevu-name-l2 {
+  margin-top: 10px;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.02438rem;
+  line-height: 1.375rem;
+  text-decoration: none;
+}
+body .klevu-fluid .klevuSearchResults-l2 .klevu-desc-l2 {
+  display: none;
+}
+body .klevu-fluid .klevuSearchResults-l2 .klevu-saleprice-l2 {
+  font-weight: 300;
+}
+
+/* search results */
+#search-results.klevu-search-enabled .page-content,
+#suchergebnisse.klevu-search-enabled .page-content {
+  margin-top: 7rem;
+}
+#search-results.klevu-search-enabled .page-content > h1.title,
+#suchergebnisse.klevu-search-enabled .page-content > h1.title {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+body .kuContainer {
+  padding: 0;
+}
+#search-results .kuGridView ul,
+#suchergebnisse .kuGridView ul {
+  grid-gap: 20px 10px;
+  grid-template-columns: repeat(2, 1fr);
+  display: grid;
+}
+@media (min-width: 768px) {
+  #search-results .kuGridView ul,
+  #suchergebnisse .kuGridView ul {
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+#search-results .kuGridView ul li,
+#suchergebnisse .kuGridView ul li {
+  position: relative;
+  display: block;
+  min-height: 0;
+  width: 100%;
+  margin: 0 !important;
+  padding: 0;
+  border: 0;
+}
+
+.kuGridView ul li .kuNameDesc .kuName {
+  margin-bottom: 0;
+  padding-left: 0;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.02438rem;
+  line-height: 1.375rem;
+  text-align: center;
+}
+.kuGridView ul li .kuNameDesc .kuName a {
+  text-decoration: none;
+  border-bottom: none !important;
+}
+#search-results .kuGridView ul li .kuPrice,
+#suchergebnisse .kuGridView ul li .kuPrice {
+  margin-top: 0;
+  padding-left: 0;
+  font-size: 0.8125rem;
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.25rem;
+  text-align: center;
+  font-weight: 400;
+}
+#search-results .kuGridView ul li .kuPrice .kuSalePrice,
+#suchergebnisse .kuGridView ul li .kuPrice .kuSalePrice {
+  margin-right: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+body .kuContainer.kuFiltersLeft .kuFilterHead.kufilter-label {
+  margin-top: -70px;
+}
+
+#ku-search-field {
+  -webkit-appearance: none;
+  border-radius: 0 !important;
+}

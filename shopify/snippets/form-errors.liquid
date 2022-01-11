@@ -1,0 +1,33 @@
+
+{% if form.errors %}
+	{%- if template == "customers/register" or template == "customers/login" -%}
+		{% for field in form.errors %}
+			{% if field == 'form' %}
+				{% if form.errors.messages[field] contains 'We have sent an email to'
+					or form.errors.messages[field] contains 'Wir haben eine E-Mail an' %}
+					<span class="alert alert--success">
+						{{ form.errors.messages[field] }}
+					</span>
+				{% else %}
+					<span class="alert alert--error">
+						{{ form.errors.messages[field] }}
+					</span>
+				{% endif %}
+			{% else %}
+				<span class="alert alert--error">
+					<strong>{{ form.errors.translated_fields[field] }}</strong> {{ form.errors.messages[field] }}
+				</span>
+			{% endif %}
+		{% endfor %}
+	{%- else -%}
+		{% for field in form.errors %}
+			<span class="alert alert--error">
+				{% if field == 'form' %}
+					{{ form.errors.messages[field] }}
+				{% else %}
+					<strong>{{ form.errors.translated_fields[field] }}</strong> {{ form.errors.messages[field] }}
+				{% endif %}
+			</span>
+		{% endfor %}
+	{%- endif -%}
+{% endif %}

@@ -1,0 +1,37 @@
+{%- if template == "customers/register" or template == "customers/login" -%}
+<script>
+  (function(){
+    $('.form-tabs [data-form-tab-nav-item]').click(function(e){
+      e.preventDefault();
+      var tab = $(this).attr('data-form-tab-nav-item');
+      formTabNavigateTo(tab);
+    });
+    function formTabNavigateTo(tab) {
+      $('.form-tabs__nav-item.tab-active').removeClass('tab-active');
+      $tabNavItem = $('.form-tabs__nav-item[data-form-tab-nav-item="' + tab + '"]');
+      $tabNavItem.addClass('tab-active');
+      $('.form-tabs__tab-content.tab-active').removeClass('tab-active');
+      var tabId = '#tab-'+tab+'-form';
+      $(tabId).addClass('tab-active');
+    }
+  })();
+</script>
+{%- endif -%}
+{%- comment -%}if reCaptcha is enabled{%- endcomment -%}
+<script>
+  window.addEventListener('load', function () {
+    let redirectURL = "/account";
+    let challengeURL = "/challenge";
+    if(window.location.pathname === challengeURL) {
+      // 1. create a new redirect input element
+      let redirectInput = document.createElement("input");
+      redirectInput.type = "hidden";
+      redirectInput.name = "return_to";
+      redirectInput.value = redirectURL;
+      // 2. find the captcha element within the form
+      let $recaptcha = document.getElementById('g-recaptcha');
+      // 3. now add the redirect input within the form 
+      $recaptcha.parentNode.insertBefore(redirectInput, $recaptcha.nextSibling); 
+    }
+  });
+</script>

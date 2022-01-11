@@ -1,0 +1,13 @@
+{% assign id = snippet_instance.id %}
+{% assign quote = snippet_instance.settings.quote %}
+{% assign text_alignment = snippet_instance.settings.text_alignment %}
+{% assign image = snippet_instance.settings.image %}
+<div id="id-{{ id }}" class="content-section gutter--on"> 
+
+  <div class="rich-text__image" style="text-align: {{ text_alignment }}">
+    {% unless image == blank %}
+      {% render 'lazy-image', image: image %}
+    {% endunless %}
+  </div>
+
+</div>

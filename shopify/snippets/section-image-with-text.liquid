@@ -1,0 +1,45 @@
+{% assign url = snippet_instance.settings.url %}
+{% assign button_label = snippet_instance.button_label.url %}
+{% assign text_alignment = snippet_instance.settings.text_alignment %}
+{% assign text_size = snippet_instance.settings.text_size %}
+{% assign title = snippet_instance.settings.title %}
+{% assign body = snippet_instance.settings.body %}
+{% assign color_text = snippet_instance.settings.color_text %}
+{% assign color_bg = snippet_instance.settings.color_bg %}
+{% assign image = snippet_instance.settings.image %}
+{% assign shopify_attributes = snippet_instance.shopify_attributes %}
+<div class="image-text__container" {{ shopify_attributes }}>
+
+  {% if url != blank and button_label == blank %}
+    <a href="{{ url | escape }}">
+  {% endif %}
+
+    <div class="image-text__content {{ text_alignment }}">
+      <div>
+        
+        <h3 class="image-text__title {% if text_size == 'regular' %} h1 {% elsif text_size == 'large' %} h0 {% else %} hh {% endif %}"><span>{{ title | escape }}</span></h3>
+
+        {% unless body == blank %}
+        <div class="image-text__body rte">{{ body }}</div>
+        {% endunless %}
+
+        {% unless button_label == blank %} 
+          <a class="button button--solid" {% if color_text != 'rgba(0,0,0,0)' %} data-color="{{ color_text }}" {% endif %} {% unless url == blank %} href="{{ url | escape }} {% endunless %}" title="{{ button_label | escape }}">{{ button_label | escape }}</a>
+        {% endunless %}
+
+      </div>
+    </div>
+  
+    <div class="image-text__background">
+      {% unless image == blank %}
+        <img src="{{ block.settings.image_hover | img_url: 'master' }} />
+      {% else %}
+        <span class="onboarding-svg onboarding-background">{{ 'image' | placeholder_svg_tag }}</span>
+      {% endunless %}
+    </div>
+
+  {% if url != blank and button_label == blank %}
+    </a>
+  {% endif %}
+
+</div>

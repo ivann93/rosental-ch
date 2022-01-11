@@ -1,0 +1,5 @@
+shopify/**/*.liquid
+shopify/**/theme.css
+shopify/**/theme-customized.js
+shopify/**/theme-customized.min.js
+shopify/**/theme.dev.js

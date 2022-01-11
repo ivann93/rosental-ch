@@ -1,0 +1,70 @@
+{% if section.blocks.size > 0 %}
+  <div class="md:flex w-full mt-8 md:mt-4 text-gray-600 mb-12 px-5 justify-center align-items items-center">
+    <div class="w-full mb-4 md:text-md md:w-1/5 text-center">
+      {{ section.settings.heading }}
+    </div>
+    <div class="w-full md:w-4/5 flex justify-center align-items items-center">
+    {% if section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+        <div class="w-1/4 text-center px-2">
+          <div class="max-w-30 block mx-auto mb-2 mt-2 brand-image-item">
+            <a href="{{ block.settings.link }}" target="_blank">
+              <img src="{{ block.settings.image | img_url: 'master' }}" class="default-image" />
+              <img src="{{ block.settings.image_hover | img_url: 'master' }}" class="hovered-image" />
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Brand Images",
+    "class": "mount-slider overflow-hidden",
+    "max_blocks": 8,
+    "settings": [
+      {
+        "type": "text", 
+        "id": "heading",
+        "label": "Title" 
+      }
+	  ],
+    "blocks": [
+    	{
+	      "type": "image",
+	      "name": "Image",
+	      "settings": [
+	        {
+	          "type": "image_picker",
+	          "id": "image",
+	          "label": "Image"
+	        },
+          {
+	          "type": "image_picker",
+	          "id": "image_hover",
+	          "label": "Image hovered"
+	        },
+          {
+	          "type": "url",
+	          "id": "link",
+	          "label": "Link"
+	        }
+	      ]
+	    }
+	  ],
+    "presets": [{
+      "name": "Brand Logos",
+      "category": "Image",
+      "blocks": [{
+        "type": "image"
+      },{
+        "type": "image"
+      },{
+        "type": "image"
+      }]
+    }]
+  }
+{% endschema %}

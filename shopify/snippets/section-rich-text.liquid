@@ -1,0 +1,119 @@
+{% assign id = snippet_instance.id %}
+{% assign gutter_enabled = snippet_instance.settings.gutter_enabled %}
+{% assign image = block.settings.image %}
+{% assign image_width = block.settings.image_width %}
+{% assign image_position = snippet_instance.settings.image_position %}
+{% assign image_height = snippet_instance.settings.image_height %}
+{% assign title = snippet_instance.settings.title %}
+{% assign subtitle = snippet_instance.settings.subtitle %}
+{% assign body = snippet_instance.settings.body %}
+{% assign text_alignment = snippet_instance.settings.text_alignment %}
+{% assign text_size = snippet_instance.settings.text_size %}
+{% assign color_bg = snippet_instance.settings.color_bg %}
+{% assign color_text = snippet_instance.settings.color_text %}
+<div id="id-{{ id }}" class="content-section {% unless image == blank %} gutter--{% if gutter_enabled and image %}on{% else %}off{% endif %} {% else %} gutter--on {% endunless %} rich-text rich-text--{{ image_position }} rich-text--media-{% unless image == blank %}on{% else %}off{% endunless %}">
+
+  <div class="rich-text__content" style="text-align: {{ text_alignment }}">
+
+    {% unless title == blank %}
+      {% assign title_parsed = title | replace: "[[", '<span class="underlined">' %}
+      {% assign title_parsed = title_parsed | replace: "]]", "</span>" %}
+      <h2 class="rich-text__title {% if text_size == 'regular' %} h1 {% elsif text_size == 'large' %} h0 {% else %} hh {% endif %}">{{ title_parsed }}</h2>
+    {% endunless %} 
+
+    {% unless subtitle == blank %}
+      <div class="rich-text__subtitle h1">{{ subtitle | escape }}</div>
+    {% endunless %}
+
+    {% unless body == blank %}
+      <div class="rich-text__body rte">{{ body }}</div>
+    {% endunless %}
+
+  </div>
+  
+  {% unless image == blank%}
+    <div class="rich-text__media">
+      <div class="rich-text__media-inner">
+        <img
+          src="{{ image | img_url: '860x' }}" alt="{{ alt | escape }}"
+          lass="img lazyload"
+        />
+      </div>
+    </div>
+    {% style %}
+      #id-{{ id }} .rich-text__media {
+        height: auto !important;
+      }
+      
+      @media screen and (max-width: 648px) {
+        #id-{{ id }} .rich-text__media {
+          height: auto !important;
+        }
+      }
+      
+    {% endstyle %}
+  {% endunless %}
+
+</div>
+
+{% style %}
+    #id-{{ id }} .rich-text__title .underlined {
+      position: relative;
+    }
+    #id-{{ id }} .rich-text__title .underlined:after {
+        content: '';
+        background-image: url(https://rosental.de/wp-content/uploads/2019/08/wave.svg);
+        background-size: cover;
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        filter: invert(93%) sepia(13%) saturate(494%) hue-rotate(105deg) brightness(93%) contrast(86%);
+        opacity: .3;
+    }
+    #id-{{ id }} .rich-text__subtitle {
+      margin-bottom: 1em;
+    }
+{% endstyle %}
+
+
+{% if image_width != blank %}
+  {% style %}
+    #id-{{ id }} .rich-text__media {
+      width: {{ image_width }}%;
+    }
+
+    @media screen and (max-width: 948px) {
+      #id-{{ id }} .rich-text__media {
+        width: 100%;
+        max-width: 90vw;
+        margin: 0 auto;
+      }
+    }
+  {% endstyle %}
+{% endif %}
+
+{% if color_bg != 'rgba(0,0,0,0)' %}
+  {% style %}
+    #id-{{ id }} .rich-text__content,
+    #id-{{ id }}.rich-text--media-off {
+      background: {{ color_bg }};
+    }
+    #id-{{ id }}.rich-text--media-off {
+      padding-top: 100px;
+      padding-bottom: 100px;
+    }
+  {% endstyle %}
+{% endif %}
+
+{% if color_text != 'rgba(0,0,0,0)' %}
+  {% style %}
+    #id-{{ id }} {
+      color: {{ color_text }};
+    }
+    #id-{{ id }} a {
+      color: {{ color_text }};
+    }
+  {% endstyle %}
+{% endif %}

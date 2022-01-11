@@ -1,0 +1,30 @@
+{%- if template contains 'collection' -%} 
+{%- assign show_concern_badge = false -%}
+{%- for tag in product.tags -%}
+  {%- if tag contains 'concern-badge-v' -%}
+    {%- assign show_concern_badge = true -%}
+    {%- assign concern_badge_version = tag -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if show_concern_badge -%}
+{%- if concern_badge_version contains 'concern-badge-v1' -%}
+  {%- assign concern_badge_wording = settings.concern1 -%}
+{%- elsif concern_badge_version contains 'concern-badge-v2' -%}
+  {%- assign concern_badge_wording = settings.concern2 -%}
+{%- elsif concern_badge_version contains 'concern-badge-v3' -%}
+  {%- assign concern_badge_wording = settings.concern3 -%}
+{%- elsif concern_badge_version contains 'concern-badge-v4' -%}
+  {%- assign concern_badge_wording = settings.concern4 -%}
+{%- elsif concern_badge_version contains 'concern-badge-v5' -%}
+  {%- assign concern_badge_wording = settings.concern5 -%}
+{%- elsif concern_badge_version contains 'concern-badge-v6' -%}
+  {%- assign concern_badge_wording = settings.concern6 -%}
+{%- endif -%}
+
+{%- unless concern_badge_wording == blank -%}
+<div class="product-item__badge concern-badge">{{ concern_badge_wording }}</div>
+{%- endunless -%}
+{%- endif -%}
+{%- endif -%}

@@ -1,0 +1,27 @@
+#shopify-section-blog {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 4rem;
+  width: 100%;
+}
+
+@media screen and (min-width: 948px) {
+  .articles-list .blog-item {
+    width: 33.3%;
+  }
+}
+
+.blog-item__title {
+  font-size: 1.375rem;
+  font-weight: 400;
+  letter-spacing: 0.0625rem;
+  line-height: 1.5rem;
+  text-transform: uppercase;
+}
+
+.blog-item__meta {
+  display: none;
+}

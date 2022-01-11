@@ -1,0 +1,54 @@
+<div class="collection-sale-banner__inner">
+  {%- for block in section.blocks -%}
+    {%- assign collection = collections[block.settings.title] -%}
+    {%- assign collection_title = collection.title -%}
+    {%- if block.settings.custom_title != blank -%}
+      {%- assign collection_title = block.settings.custom_title -%}
+    {%- endif -%}
+    <a class="collection-sale-item" href="{{ collection.url }}" {{ block.shopify_attributes }} title="{{ collection_title }}">
+      {%- if block.settings.image == blank -%}
+      <div class="collection-sale-item__image">
+        <div class="collection-sale-item__image-placeholder">{{ collection_title }}</div>
+      </div>
+      {%- else -%}
+      <div class="collection-sale-item__image">
+        <img alt="{{ collection_title }}" src="{{ block.settings.image | img_url: 'master' }}">
+      </div>
+      {%- endif -%}
+      <span class="collection-sale-item__title">{{ collection_title }}</span>
+    </a>
+  {%- endfor -%}
+</div>
+
+{% schema %}
+  {
+    "name": "Collection Sale Banner",
+    "tag": "section",
+    "class": "collection-sale-banner",
+    "max_blocks": 8,
+    "blocks": [
+    	{
+	      "type": "collection_block",
+	      "name": "Collection",
+	      "settings": [
+          {
+            "id": "title",
+            "type": "collection",
+            "label": "Collection"
+          },
+	        {
+            "id": "image",
+	          "type": "image_picker",
+	          "label": "Image"
+	        },
+          {
+            "id": "custom_title",
+            "type": "text",
+            "label": "Title",
+            "info": "Use this if you need a custom title - leave it empty to use the selected collection title"
+          }
+	      ]
+	    }
+	  ]
+  }
+{% endschema %}

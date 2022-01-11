@@ -1,0 +1,29 @@
+{% form 'create_customer' %}
+{%- comment -%}if reCaptcha is not enabled{%- endcomment -%}
+  <input type="hidden" name="return_to" value="/account" />
+  <div>
+    {%- if template == "customers/register" -%}
+      {% include 'form-errors' %}
+    {%- endif -%}
+    <div class="form-item">
+      <label for="first_name" class="hidden">{{ 'customers.register_page.form.first_name_label' | t }}</label>
+      <input type="text" value="" name="customer[first_name]" id="first_name" placeholder="{{ 'customers.register_page.form.first_name_label' | t }}" {% if form.errors contains "first_name" %} class="error"{% endif %} autocapitalize="words" autofocus>
+    </div>
+    <div class="form-item">
+      <label for="last_name" class="hidden">{{ 'customers.register_page.form.last_name_label' | t }}</label>
+      <input type="text" value="" name="customer[last_name]" id="last_name" placeholder="{{ 'customers.register_page.form.last_name_label' | t }}" {% if form.errors contains "last_name" %} class="error"{% endif %} autocapitalize="words">
+    </div>
+    <div class="form-item">
+      <label for="email" class="hidden">{{ 'customers.register_page.form.email_label' | t }}</label>
+      <input type="email" value="" name="customer[email]" id="email" placeholder="{{ 'customers.register_page.form.email_label' | t }}" {% if form.errors contains "email" %} class="error"{% endif %} autocorrect="off" autocapitalize="off">
+    </div>
+    <div class="form-item">
+      <label for="password" class="hidden">{{ 'customers.register_page.form.password_label' | t }}</label>
+      <input type="password" value="" name="customer[password]" id="create_password" placeholder="{{ 'customers.register_page.form.password_label' | t }}" {% if form.errors contains "password" %} class="error"{% endif %}>
+    </div>
+    <div class="login-actions">
+      <input class="button button--solid button--wide" type="submit" value="{{ 'customers.register_page.form.submit_button' | t }}">
+    </div>
+    <p class="title text-center">{{ 'customers.register_page.title' | t }}</p>
+  </div>
+{% endform %}

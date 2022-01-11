@@ -1,0 +1,69 @@
+{% schema %}
+  {
+    "name": "Login Free Benefits",
+    "tag": "section",
+    "max_blocks": 3,
+    "settings": [
+      {
+        "id": "enabled",
+        "type": "checkbox",
+        "label": "Enable",
+        "info": "Display this section",
+        "default": false
+      },
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Heading",
+        "default": "Jetzt exklusive Vorteile sichern!"
+      },
+      {
+        "id": "description",
+        "type": "textarea",
+        "label": "Add custom text below",
+        "default": "Wir sind froh, dich als Clubmitglied der Rosental Familie begrüßen zu dürfen und wollen deine Treue belohnen. Melde ich an und sichere dir exklusive Shopping Vorteile!"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "benefits",
+        "name": "Benefits",
+        "settings": [
+          {
+            "id": "icon",
+            "type": "image_picker",
+            "label": "Icon"
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Text",
+            "info": "To move text in new line add <br>"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+{%- if section.settings.enabled -%}
+<div class="login-free-benefits">
+  <div class="login-section__inner free-benefits__inner">
+    {%- if section.settings.title != "" -%}
+      <h2 class="login-h2">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    {%- if section.settings.description != "" -%}
+      <p>{{ section.settings.description }}</p>
+    {%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="free-benefits__info free-benefits__items">
+      {%- for block in section.blocks -%}
+        <div class="free-benefits__item" {{ block.shopify_attributes }}>
+          <img src="{{ block.settings.icon | img_url: 'master' }}">
+          <span>{{ block.settings.title }}</span>
+        </div>
+      {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+{%- endif -%}

@@ -1,0 +1,34 @@
+/*
+|--------------------------------------------------------------------------
+| Klevu Product Recommendations
+|--------------------------------------------------------------------------
+|
+*/
+#shopify-section-klevu-product-recommendations,
+.product-recommendations-section {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3rem;
+}
+
+/* klevu styles override */
+/* add these to klevu template styles */
+/* .kuRECSContainer {
+  margin: 15px 3.2vw;
+}
+.kuRECSContainer .kuRECSHeader .kuRECSTitle {
+}
+.kuRECSContainer .kuRECSWrap {
+}
+.kuRECSContainer .kuRECSWrap * {
+}
+.kuRECSContainer .kuRECSResults {
+}
+.kuRECSContainer .kuRECSResultsInner {
+  display: flex;
+}
+.kuRECSContainer .kuRECSResultsInner .kuRECS-itemWrap {
+  flex: 1 0 auto;
+} */

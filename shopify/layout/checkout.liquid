@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="{{ locale }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
+  <head>
+    {%- render 'elevar-head' -%}
+    {% if shop.permanent_domain == 'rosental-de.myshopify.com' %}
+      {% include "gtm-head" %}
+      <script src="https://www.googleoptimize.com/optimize.js?id=OPT-5WCVWKZ"></script>
+    {% endif %}
+    <script type="text/javascript" src="https://try.abtasty.com/257d66e320a9f11d907e9fe4237e5238.js"></script>
+    {% include 'hotjar' %}
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NW8NHY18V4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NW8NHY18V4');
+</script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
+    <meta name="referrer" content="origin">
+
+    <title>{{ page_title }}</title>
+
+    {{ content_for_header }}
+
+    {{ checkout_stylesheets }}
+    {{ checkout_scripts }}
+    {% include "loyaltylion" %}
+<script>lion.configure({ checkout: true })</script>
+</head>
+  <body>
+    {%- render 'elevar-checkout-end' -%}
+    {% if shop.permanent_domain == 'rosental-de.myshopify.com' %}
+      {% include "gtm-checkout" %}
+    {% endif %}
+    {{ skip_to_content_link }}
+
+    <header class="banner" data-header role="banner">
+      <div class="wrap">
+        {{ content_for_logo }}
+      </div>
+    </header>
+
+    {{ order_summary_toggle }}
+    <div class="content" data-content>
+      <div class="wrap">
+        <div class="main">
+          <header class="main__header" role="banner">
+            {{ content_for_logo }}
+            {{ breadcrumb }}
+            {{ alternative_payment_methods }}
+          </header>
+          <main class="main__content" role="main">
+            {{ content_for_layout }}
+            {% if shop.permanent_domain == 'rosental-de.myshopify.com' %} 
+            <div class="footer-tos" style="display: none; margin-top: 1em; margin-bottom: 1em;"><p class="tos">Durch das Klicken auf den Kaufen Button erkläre ich mich mit den <a href="/policies/terms-of-service"><b>AGBs</b></a> einverstanden und die <a href="/policies/refund-policy"><b>Widerrufsbelehrung</b></a> habe ich zur Kenntnis genommen.</p></div>
+            {% endif %}
+          </main>
+          <footer class="main__footer" role="contentinfo">
+            {{ content_for_footer }}
+          </footer>
+        </div>
+        <aside class="sidebar" role="complementary">
+          <div class="sidebar__header">
+            {{ content_for_logo }}
+          </div>
+          <div class="sidebar__content">
+            {{ content_for_order_summary }}
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    {{ tracking_code }}
+
+    <style>
+      .field__input-wrapper .validation {
+        position: absolute;
+        right: .8em;
+        top: .9em;
+        width: 20px;
+      }
+
+      .field__input-wrapper .validation.success {
+        color: #4BB543;
+      }
+
+      .field__input-wrapper .validation.error {
+        color: #ff6d6d;
+      }
+    </style>
+
+    <script>
+      var $;
+      if (window.jQuery) { 
+        $ = window.jQuery;
+      } else if (window.Checkout && window.Checkout.$) {
+        $ = window.Checkout.$;
+      }
+      function setCookie(name,value,days) {
+          var expires = "";
+          if (days) {
+              var date = new Date();
+              date.setTime(date.getTime() + (days*24*60*60*1000));
+              expires = "; expires=" + date.toUTCString();
+          }
+          document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+      }
+      function getCookie(name) {
+          var nameEQ = name + "=";
+          var ca = document.cookie.split(';');
+          for(var i=0;i < ca.length;i++) {
+              var c = ca[i];
+              while (c.charAt(0)==' ') c = c.substring(1,c.length);
+              if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+          }
+          return null;
+      }
+
+      function getFields() {
+        return [
+            {
+              name: "first_name",
+              checks: ["notEmpty"]
+            },
+            {
+              name: "last_name",
+              checks: ["notEmpty"]
+            },
+            {
+              name: "address1",
+              checks: ["notEmpty", "houseNo"]
+            },
+            {
+              name: "zip",
+              checks: ["notEmpty"]
+            },
+            {
+              name: "city",
+              checks: ["notEmpty"]
+            } 
+          ];
+      }
+
+      var svgInvalid = '<svg class="validation error" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+      var svgValid = '<svg class="validation success" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+
+      function applyOnLeaveField(name, checks) {
+        var groupDiv = $("div[data-address-field='"+ name +"']");
+        var valid = true;
+        if (groupDiv.length) {
+          var input = groupDiv.find("input");
+
+          input.blur(function() {
+            validateField(name, checks);
+          });
+        }
+      }
+
+      function validateField(name, checks) {
+        var groupDiv = $("div[data-address-field='"+ name +"']");
+        var valid = true;
+        if (groupDiv.length) {
+          var input = groupDiv.find("input").val().toString();
+          input = input.trim();
+          for (var check of checks) {
+            if (!valid) continue;
+            if (check == 'notEmpty') {
+              if (input == "") {
+                valid = false;
+              }
+            } else if (check == 'houseNo') {
+              var address1Matches = input.matchAll(/^[ \-a-zÖÜÄüößäàáÀÁéÈÉA-Z0-9.']+\s+(\d+(\s?\w$)?)/gm);
+              
+              var matched = false;
+              for (var match of address1Matches) {
+                matched = true;
+              }
+              valid = matched;
+            }
+          }
+          var inputWrapper = groupDiv.find(".field__input-wrapper");
+          if (!valid) {
+            groupDiv.addClass("field--error");
+            inputWrapper.find(".validation").remove();
+            inputWrapper.append(svgInvalid);
+          } else {
+            groupDiv.removeClass("field--error");
+            inputWrapper.find(".validation").remove();
+            inputWrapper.append(svgValid);
+          }
+        }
+        return valid
+      }
+
+      function initFormValidation() { 
+        {% if shop.permanent_domain != 'rosental-de.myshopify.com' %} 
+          return false;
+        {% endif %}
+        var fields = getFields();
+        for (var field of fields) {
+          var fieldName = field.name;
+           var checks = field.checks;
+          applyOnLeaveField(fieldName, checks);
+        }
+        $(".step form").submit(function(event) {
+          var success = true;
+          for (var field of fields) {
+            var fieldName = field.name;
+            var checks = field.checks;
+            applyOnLeaveField(fieldName, checks);
+            var valid = validateField(fieldName, checks);
+            if (!valid) {
+              success = false;
+            }
+          }
+          if (!success) {
+            event.preventDefault();
+            return false;
+          }
+          return true;
+        })
+      }
+
+      if (typeof $ !== "undefined" && $ !== undefined && $ !== null) {
+        $(document).on("page:load page:change", function(e) {
+            var step = Shopify.Checkout.step;
+
+            if (step == 'payment_method') {
+              var footerTos = $(".footer-tos").show();
+              $(".step__footer").after(footerTos);
+
+              var paypal = $('.radio-wrapper[data-gateway-name="paypal"]');
+              var expl = paypal.next();
+              var target = $('.section--payment-method .section__content fieldset');
+              var firstView = getCookie('payment_method_check');
+              if (!firstView) {
+                target.find("legend").after(paypal);
+                paypal.after(expl);
+                paypal.find("input.input-radio").trigger('click');
+              }
+
+              $("button#continue_button").on('click', function() {
+                setCookie("payment_method_check", 1, 1);
+              })
+            } else if (step == 'contact_information') {
+              initFormValidation();
+            }
+        });
+      } 
+    </script>
+  </body>
+</html>

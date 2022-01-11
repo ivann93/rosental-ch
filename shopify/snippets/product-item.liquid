@@ -1,0 +1,222 @@
+{% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+  {% assign on_sale = true %}
+{% endif %}
+
+{% assign sold_out = true %}
+{% if product.available  %}
+  {% assign sold_out = false %}
+{% endif %}
+
+{% if settings.grid_aspect == 'natural' %}
+  {% if product.media.size == 0 or blank_product %} 
+    {% assign aspect_ratio = 1 %}
+  {% else %}
+    {% unless product.featured_media.aspect_ratio > 0 %}
+      {% assign aspect_ratio = 1 %}
+    {% else %}
+      {% assign aspect_ratio = product.featured_media.aspect_ratio %}
+    {% endunless %}
+  {% endif %}
+{% else %}
+  {% assign aspect_ratio = settings.grid_aspect %}
+{% endif %}
+
+{% capture badges_capture %}
+{% unless blank_product %}
+
+      {% if sold_out %}
+        
+        <span class="product-item__badge product-item__badge--sold"><span>{{ 'products.grid.sold_out_product' | t }}</span></span>
+
+      {% elsif on_sale %}
+
+        {% if settings.grid_discount == 'percentage' %}
+          {%- assign discount_percentage = 0 -%}
+          {%- for variant in product.variants -%}
+            {%- if variant.compare_at_price > variant.price -%}
+              {%- assign variant_discount = variant.price | times: 100.0 | divided_by: variant.compare_at_price | minus: 100 | abs | round -%}
+              {%- if variant_discount > discount_percentage -%}
+                {%- assign discount_percentage = variant_discount -%}
+              {%- endif -%}
+              {%- capture variable_discount_list -%}
+                {%- if variable_discount_list -%}
+                  {{ variable_discount_list | append: ':' | append: variant_discount }}
+                {%- else -%}
+                  {{ variable_discount_list | append: variant_discount }}
+                {%- endif -%}
+              {%- endcapture -%}
+            {%- else -%}
+              {%- capture variable_discount_list -%}
+                {%- if variable_discount_list -%}
+                  {{ variable_discount_list | append: ':' | append: 0 }}
+                {%- else -%}
+                  {{ variable_discount_list | append: 0 }}
+                {%- endif -%}
+              {%- endcapture -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- assign variable_discount_array = variable_discount_list | split: ':' -%}
+          {%- assign is_variable_discount = false -%}
+          {%- if variable_discount_array.size > 1 -%}
+            {%- assign var_item = variable_discount_array[0] -%}
+            {%- for item in variable_discount_array -%}
+              {%- if var_item != item -%}
+                {%- assign is_variable_discount = true -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+          {%- for tag in product.tags -%}
+            {%- if tag contains 'fake-discount' -%}
+              {%- assign fake_discount = tag | split: ':' -%}
+              {%- assign fake_discount_tag = fake_discount | first -%}
+              {%- assign fake_discount_value = fake_discount | last -%}
+              {%- if fake_discount_value -%}
+                {%- assign discount_percentage = fake_discount_value -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          <span class="product-item__badge product-item__badge--sale"><span>{% if is_variable_discount %}{{ 'products.grid.from' | t }} {% else %}-{% endif %}{{ discount_percentage }}%</span></span>
+        {% else %}
+          <span class="product-item__badge product-item__badge--sale"><span>{{ 'products.grid.on_sale_product' | t }}</span></span>
+        {% endif %}
+
+      {% elsif product.tags contains 'preorder' %}
+
+        <span class="product-item__badge product-item__badge--preorder"><span>{{ 'products.grid.preorder_product' | t }}</span></span>
+
+      {% elsif product.tags contains 'new' %}
+
+        <span class="product-item__badge product-item__badge--new"><span>{{ 'products.grid.new_product' | t }}</span></span>
+
+      {% endif %}
+
+    {% endunless %}
+{% endcapture %}
+
+<div class="product-item {% if product.tags contains 'featured' and settings.grid_enhance_featured_product and template != 'search' %} featured {% endif %}">
+
+  <a href="{{ product.url | within: collection }}" >
+
+    {% if product.media.size == 0 or blank_product %} 
+
+      <span class="product-item__thumbnail onboarding-svg onboarding-background" style="padding-top:{{ aspect_ratio | times: 100 }}%" data-padding="{{ aspect_ratio | times: 100 }}">
+         {% assign no = forloop.index | modulo:6 | plus:1 %}
+        {{ 'product-X' | replace: 'X', no | placeholder_svg_tag }}
+       </span>
+
+    {% else %}
+
+      <div class="product-item__thumbnail" style="padding-top:{{ 100 | divided_by: aspect_ratio }}%" data-padding="{{ 100 | divided_by: aspect_ratio }}">
+        
+        {% if settings.grid_aspect == 'natural' %}
+          {% render 'lazy-image', image: product.featured_media, type: 'background', %}
+        {% else %}
+          {% render 'lazy-image', image: product.featured_media, type: 'background', ratio: aspect_ratio %}
+        {% endif %}
+
+        {% if settings.grid_show_secondary_image and product.media.size >= 2 %}
+
+          <div class="product-item__secondary-image">
+            {% if settings.grid_aspect == 'natural' %}
+              {% render 'lazy-image', image: product.media[1] type: 'background', %}
+            {% else %}
+              {% render 'lazy-image', image: product.media[1] type: 'background', ratio: aspect_ratio %}
+            {% endif %}
+          </div>
+
+        {% endif %}
+        <div class="product-item__badge-container">
+          {{ badges_capture }}
+          {%- render 'concern-badge', product: product -%}
+        </div>
+      </div>
+
+    {% endif %}
+
+    {%- for tag in product.tags -%}
+      {%- assign badge_type_arr = tag | split: '[' -%}
+      {%- assign pre = badge_type_arr | first -%}
+      {%- if pre == 'badge' -%}
+        {%- assign badge_type = badge_type_arr | last | remove: ']' -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    
+    {%- unless badge_type == blank -%}
+      {%- render 'badge', badge_type: badge_type -%}
+    {%- endunless -%}
+
+    <div class="product-item__caption {% if settings.show_reviews_badge %} reviews-visible {% endif %}">
+
+      <h3 class="product-item__title h3 {% if settings.grid_style == 'classic' %} underline-animation {% endif %}">
+        {% unless product.title == blank %}
+          {{ product.title | escape }}
+        {% else %}
+          Product title
+        {% endunless %}
+      </h3>
+
+      {% assign prod_tags = product.tags | join: "," %}
+      {%- if prod_tags contains 'meta-PLP' -%}
+        {% assign featured_tag = prod_tags | split: "_" | last | split: ',' | first %}
+        <h4 class="product-item-tag h3">
+          {{featured_tag}}
+        </h4>
+      {%- endif -%}
+
+      <div class="product-item__price">
+
+        {% unless product.price == blank %}
+
+          {% if product.price_varies %} 
+            <span class="product-item__from">
+              {% if product.compare_at_price > product.price %}
+                {{ 'products.grid.on_sale_from_html' | t: price: price }}
+              {% else %}
+                {{ 'products.grid.from_text_html' | t: price: price }} 
+              {% endif %}
+            </span>
+          {% endif %}
+
+          {% if on_sale %}
+            <span class="product-item__price--compare">{{ product.compare_at_price | money }}</span>
+          {% endif %}
+
+          <span class="product-item__price--original">
+            {{ product.price | money }}
+          </span>
+        
+          {% if product.selected_or_first_available_variant.unit_price_measurement %}
+            <span class="unit-price">
+              {{ product.selected_or_first_available_variant.unit_price | money }} / 
+              {% if product.selected_or_first_available_variant.unit_price_measurement.reference_value != 1 %}
+                {{ product.selected_or_first_available_variant.unit_price_measurement.reference_value }}
+              {% endif %}
+              {{ product.selected_or_first_available_variant.unit_price_measurement.reference_unit }}
+            </span>
+          {% endif %}
+
+        {% else %}
+          <span class="product-item__price--original">
+            {{ 9999 | money }}
+          </span>
+        {% endunless %}
+
+      </div>
+
+      {% if settings.show_reviews_badge %}
+        <span class="product-item__reviews">
+          <div class="ruk_rating_snippet" data-sku="{{ product.handle }};{{ product.variants | map: 'sku' | join: ';' }};{{ product.variants | map: 'id' | join: ';' }}"></div>
+        </span>
+      {% endif %}
+
+    </div>
+
+    
+
+  </a>
+
+</div>

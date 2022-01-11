@@ -1,0 +1,74 @@
+{% schema %}
+  {
+    "name": "Home Page Signup",
+    "class": "home-page-signup-section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Klaviyo Signup Form",
+        "info": "The images and the klaviyo form field are required."
+      },
+      {
+        "type": "image_picker",
+        "id": "desktop_img",
+        "label": "Desktop Image",
+        "info": "Preffered ratio 16:9"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_img",
+        "label": "Mobile Image",
+        "info": "Preffered ratio 1:1"
+      },
+      {
+        "type": "text",
+        "id": "preheading",
+        "label": "Preheading",
+        "default": "Coming Soon",
+        "info": "Preffered just one word"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "SubHeading"
+      },
+      {
+        "type": "html",
+        "id": "snippet_html",
+        "label": "Klaviyo form snippet",
+        "info": "Add klaviyo form snippet code here"
+      }
+    ],
+    "presets": [{
+      "name": "Home Page Signup",
+      "category": "Home"
+    }]
+  }
+{% endschema %}
+{%- if section.settings.snippet_html != "" -%}
+<div class="signup-section__image-container">
+  <picture>
+    <source srcset="{{ section.settings.desktop_img | img_url: 'master' }}" media="(min-width: 949px)">
+    <img src="{{ section.settings.mobile_img | img_url: 'master' }}" alt="B-day sale image">
+  </picture>
+</div>
+<div class="signup-section__form-container">
+  {%- if section.settings.preheading != "" -%}
+  <span class="signup-section__preheading">{{ section.settings.preheading }}</span>
+  {%- endif -%}
+  {%- if section.settings.heading != "" -%}
+  <h2 class="signup-section__heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+  {%- if section.settings.subheading != "" -%}
+  <span class="signup-section__subheading">{{ section.settings.subheading }}</span>
+  {%- endif -%}
+  <div class="signup-section__klaviyo_form_wrapper">
+    {{ section.settings.snippet_html }}
+  </div>
+</div>
+{%- endif -%}

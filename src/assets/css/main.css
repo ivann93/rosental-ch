@@ -1,0 +1,154 @@
+/* purgecss start ignore */
+@tailwind base;
+
+@tailwind components;
+/* purgecss end ignore */
+
+@tailwind utilities;
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-stack-headings);
+  font-weight: var(--font-weight-headings);
+  font-style: var(--font-style-headings);
+  margin-bottom: 1em;
+}
+
+[x-cloak] {
+  display: none;
+}
+
+.lazy-image {
+  background: transparent !important;
+}
+/* fixes cut-off svg icon */
+.symbol--account {
+  overflow: visible;
+}
+
+@media screen and (max-width: 479px) {
+  .brand-image-item img {
+    margin: 0 auto;
+    max-height: 1.2em;
+  }
+  .logo__image {
+    max-width: 110px;
+  }
+  .logo img {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 480px) and (max-width: 948px) {
+  .logo img {
+    max-height: 40px;
+  }
+}
+
+@media screen and (min-width: 480px) {
+  .brand-image-item img {
+    margin: 0 auto;
+    max-height: 2em;
+  }
+}
+
+.brand-image-item .hovered-image,
+.brand-image-item:hover .default-image {
+  display: none;
+}
+
+.brand-image-item:hover .hovered-image {
+  display: block;
+}
+
+.desk-announcement-wrapper {
+  grid-template-columns: repeat(8, auto) !important;
+  max-width: 1200px;
+}
+.shipping-badges {
+  justify-self: end;
+  max-height: 20px;
+}
+
+.custom-field__seo .custom-field__inner {
+  max-width: 1200px;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  margin: 0 auto 2em;
+}
+
+/* reapply padding removed by tailwind */
+input,
+textarea,
+select {
+  padding: 3px 12px 0;
+}
+
+/* captcha container */
+.shopify-challenge__container {
+  margin: 120px auto !important;
+}
+
+/* cart indicator */
+.sidebar__cart-handle--has-items:after {
+  -webkit-animation: cart-icon_shadow-pulse 4s infinite;
+  animation: cart-icon_shadow-pulse 4s infinite;
+  background-color: rgba(var(--color-sidebar-accent));
+  border-radius: 50%;
+  content: '';
+  display: block;
+  height: 0.5rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 0.5rem;
+}
+@-webkit-keyframes cart-icon_shadow-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--color-sidebar-accent), 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 0 rgba(var(--color-sidebar-accent));
+  }
+  to {
+    box-shadow: 0 0 0 0.5rem transparent;
+  }
+}
+@keyframes cart-icon_shadow-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--color-sidebar-accent), 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 0 rgba(var(--color-sidebar-accent));
+  }
+  to {
+    box-shadow: 0 0 0 0.5rem transparent;
+  }
+}
+
+@import './home-page.css';
+@import './accounts.css';
+@import './hs-popup-cart.css';
+@import './discount-code.css';
+@import './collection.css';
+@import './reviews.css';
+@import './sidebar.css';
+@import './mobile-menu.css';
+@import './search.css';
+@import './slider.css';
+@import './product.css';
+@import './product-recs.css';
+@import './page.css';
+@import './blog.css';
+@import './footer.css';
+@import './layouthub.css';
+@import './announcementbar.css';
+@import './password-protect-form.css';
+@import './loyaltylion.css';
+@import './atomic-returns.css';
+@import './digital-downloads.css';
+@import './exposed-menu.css';
+@import './post-purchase-survey.css';

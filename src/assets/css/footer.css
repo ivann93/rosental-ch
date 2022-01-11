@@ -1,0 +1,16 @@
+#shopify-section-footer {
+  background: rgba(var(--color-footer-bg), 1);
+}
+
+#shopify-section-footer .footer {
+  @apply max-w-rosental mx-auto px-10;
+}
+
+#shopify-section-text-columns-with-icons .content-section.text-w-icon {
+  @apply max-w-rosental mx-auto px-10;
+  margin: 0 auto !important;
+}
+
+@media screen and (max-width: 948px) {
+  @apply px-5;
+}

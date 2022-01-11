@@ -1,0 +1,7 @@
+{% capture captured_page %}
+<script type="text/javascript">
+  var redirectUrl = window.location.protocol + "//" + window.location.host + "/collections/all-products" + window.location.search;
+  window.location.href = redirectUrl;
+</script>
+{% endcapture %}
+{% include 'password-protect' %}

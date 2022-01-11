@@ -1,0 +1,16 @@
+{%- assign seo_text = "" -%}
+{%- if product.metafields.custom_fields["mehr_infos"] != blank -%}
+  {%- assign seo_text = product.metafields.custom_fields["mehr_infos"] -%}
+{%- endif -%}
+
+{%- if collection.metafields.custom_fields["mehr_infos"] != blank -%}
+  {%- assign seo_text = collection.metafields.custom_fields["mehr_infos"] -%}
+{%- endif -%}
+
+{%- if seo_text != "" -%}
+  <div class="custom-field custom-field__seo">
+    <div class="custom-field__inner">
+      {{ seo_text }}
+    </div>
+  </div>
+{%- endif -%}

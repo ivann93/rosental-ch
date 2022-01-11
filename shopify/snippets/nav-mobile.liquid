@@ -1,0 +1,54 @@
+<nav class="mobile__menu">
+  {%- capture mobile_nav_lvl1 -%}
+  <ul>
+    {%- for link in menu.links -%}
+    <li class="{% if forloop.first == true %}active{% endif %}">
+      <a rel="mobile-tab-{{ link.handle }}" href="{{ link.url }}" {% if link.active or link.child_active %}class="selected"{% endif %}>{{ link.title | escape }}</a>
+    </li>
+    {%- endfor -%} 
+  </ul>
+  {%- endcapture -%}
+  {%- capture mobile_nav_lvl2 -%}
+    {%- for link in menu.links -%}
+      {%- if link.links.size -%}
+      <ul id="mobile-tab-{{ link.handle }}" class="{% if forloop.first == true %}mobile__tab--active{% endif %}">
+        {%- for childlink in link.links -%}
+        {%- assign child_img_src = "" -%}
+        {%- if childlink.type == "collection_link" or childlink.type == "catalog_link" -%}
+          {%- assign child_img_src = childlink.object.products.first.featured_image -%}
+          {%- for product in childlink.object.products limit: product_limit-%} 
+            {%- for tag in product.tags -%} 
+              {%- if tag == "mobile-menu-show-image" -%} 
+              {%- assign child_img_src = product.featured_image -%} 
+              {%- break -%}
+              {% endif %} 
+            {%- endfor -%} 
+          {%- endfor -%}
+        {%- elsif childlink.type == "product_link" -%}
+          {%- assign child_img_src = childlink.object.featured_image -%}
+        {%- endif -%}
+				<li>            
+          <a href="{{ childlink.url }}" {% if childlink.active or childlink.child_active %} class="mobile__tab--active" {% endif %}>
+						{{ childlink.title | escape }}
+            {%- if child_img_src != blank -%}
+              <img src="{{ child_img_src | img_url: '100x100' }}">
+            {%- endif -%}
+				  </a>
+        </li>
+        {%- endfor -%}
+      </ul> 
+      {%- endif -%}
+    </li>
+    {%- endfor -%}
+  {%- endcapture -%}
+
+  <div class="mobile-nav-level-1{% if img %} has-mobile-bg-image{% endif %}">
+    {%- if img -%}
+    <img class="mobile__primary-menu-bg" src="{{ img | img_url: '800x160' }}" >
+    {%- endif -%}
+    {{ mobile_nav_lvl1 }}
+  </div>
+  <div class="mobile-nav-level-2">
+    {{ mobile_nav_lvl2 }}
+  </div>
+</nav>

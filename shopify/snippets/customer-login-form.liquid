@@ -1,0 +1,29 @@
+{% form 'customer_login' %}
+  <input type="hidden" name="return_to" value="/account" />
+  <div>
+    {%- if template == "customers/login" -%}
+      {% include 'form-errors' %}
+    {%- endif -%}
+    <div class="form-item">
+      <label for="customer_email" class="hidden">{{ 'customers.login_page.form_email_label' | t }}</label>
+      <input type="email" value="" name="customer[email]" id="customer_email" placeholder="{{ 'customers.login_page.form_email_label' | t }}" {% if form.errors contains "email" %} class="error"{% endif %} autocorrect="off" autocapitalize="off" autofocus>
+    </div>
+    {% if form.password_needed %}
+      <div class="form-item">
+        <label for="customer_password" class="hidden">{{ 'customers.login_page.form_password_label' | t }}</label>
+        <input type="password" value="" name="customer[password]" id="customer_password" placeholder="{{ 'customers.login_page.form_password_label' | t }}" {% if form.errors contains "password" %} class="error"{% endif %}>
+      </div>
+    {% endif %}
+    <div class="login-actions">
+      <input type="submit" class="button button--solid button--wide" value="{{ 'customers.login_page.form_login_button' | t }}">
+      <div>
+        {% if form.password_needed %}
+          <span style="display: block;"><em class="body-size-lesser-than-normal"><a href="#recover" onclick="showRecoverPasswordForm();return false;">{{ 'customers.login_page.forgot_password_check' | t }}</a></em></span>
+        {% endif %}
+      </div>
+      <div>
+        <span data-form-tab-nav-item="register" class="title text-center">{{ 'customers.login_page.new_customer_button' | t }}</span>
+      </div>
+    </div>
+  </div>
+{% endform %}

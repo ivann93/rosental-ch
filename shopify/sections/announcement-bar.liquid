@@ -1,0 +1,116 @@
+{% if section.settings.bar_show %} 
+
+	{% if section.settings.bar_show_on_homepage == false or template == 'index' and section.settings.bar_show_on_homepage %}
+		
+		<a class="announcement announcement-v1" {% unless section.settings.bar_link == blank %} href="{{ section.settings.bar_link | escape }}" {% endunless %}>
+			<span class="announcement__text">{{ section.settings.bar_message | escape }}</span>
+		</a>
+    
+    {%- comment -%}
+    <a class="announcement announcement-v2" {% unless section.settings.bar_link == blank %} href="{{ section.settings.bar_link | escape }}" {% endunless %}>
+    {%- endcomment -%}
+    <div class="announcement announcement-v2">
+      <div class="desk-announcement-wrapper">
+        <div class="info-item"><img src="https://cdn.shopify.com/s/files/1/0518/8619/4876/files/Group.svg?v=1615981612"/> Peta approved</div>
+        <div class="vertical-seperator"></div>
+        <div class="info-item"><img src="https://cdn.shopify.com/s/files/1/0518/8619/4876/files/stars-1.svg?v=1614678077"/> 244.759+ zufriedene Kundinnen</div>
+        <div class="vertical-seperator"></div>
+        <div class="info-item"><img src="https://cdn.shopify.com/s/files/1/0518/8619/4876/files/freeshipping.svg?v=1615981708"/> Free Shipping ab 50 EUR</div>
+        
+        {%- comment -%}
+        <div class="info-item"><img src="https://cdn.shopify.com/s/files/1/0518/8619/4876/files/naturar.svg?v=1615981708"/> 100% Natural Ingredients</div>
+        {%- endcomment -%}
+        <img class="shipping-badges"
+          src="https://cdn.shopify.com/s/files/1/0518/8619/4876/files/Group_151.png?v=1615983616" />
+      </div>
+      <div class="mobile-announcement-wrapper carousel" data-flickity='{ "autoPlay": true, "wrapAround": true, "cellAlign": "center", "percentPosition": true}'>
+        <img src="https://cdn.shopify.com/s/files/1/0518/8619/4876/files/Zufriedene_Kunden244_de.svg?v=1638544269"/>
+        
+        <img src="https://cdn.shopify.com/s/files/1/0518/8619/4876/files/Frame_3_c96d2f76-8143-4979-b9af-7aa9e4120eaa.svg?v=1615983008"/>
+        
+        <img src="https://cdn.shopify.com/s/files/1/0518/8619/4876/files/Frame_4.svg?v=1615982063"/>
+        
+      </div>
+    </div>
+    {%- comment -%}
+    </a>
+    {%- endcomment -%}
+		{% if section.settings.bar_show_dismiss %}
+			<span class="announcement__exit" aria-label="{{ 'general.close' | t }}">{% render 'theme-symbols', icon: 'close' %}</span>
+		{% endif %}
+
+		{% style %}
+			.announcement {
+				background: {{ section.settings.bar_bgcolor }};
+				color: {{ section.settings.bar_txtcolor }};
+			}
+			.announcement__exit polygon {
+				fill: {{ section.settings.bar_txtcolor }};
+			}
+			{% if section.settings.bar_show_dismiss %}
+				.announcement {
+					padding-right: 40px;
+				}
+			{% endif %}
+		{% endstyle %}
+
+    <script type="text/javascript">
+      var ad = localStorage.getItem('announcement-dismissed');
+      if ( ad != 'true' ) {
+        jQuery('body').addClass('show-announcement-bar');
+      }
+    </script>
+
+	{% endif %}
+
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Announcement bar",
+    "class": "mount-announcement",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "bar_show",
+        "label": "Show announcement bar",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "bar_show_on_homepage",
+        "label": "Show only on homepage",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "bar_show_dismiss",
+        "label": "Show dismiss button",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "bar_message",
+        "label": "Content",
+        "default": "Use this bar for a short, important announcement."
+      },
+      {  
+        "type": "url",
+        "id": "bar_link",
+        "label": "Link"
+      },
+      {
+        "type": "color",
+        "id": "bar_bgcolor",
+        "label": "Background color",
+        "default": "#111111"
+      },
+      {
+        "type": "color",
+        "id": "bar_txtcolor",
+        "label": "Text color",
+        "default": "#ffffff"
+      }
+    ]
+  }
+{% endschema %}

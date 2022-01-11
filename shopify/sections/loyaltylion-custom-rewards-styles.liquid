@@ -1,0 +1,99 @@
+{% schema %}
+  {
+    "name": "Custom Rewards Styles",
+    "settings": [
+      {
+        "id": "enabled",
+        "type": "checkbox",
+        "label": "Enable",
+        "info": "Enable custom rewards styles",
+        "default": false
+      }
+    ],
+    "blocks": [
+      {
+        "type": "ll_custom_rewards_styles",
+        "name": "Item Custom Style",
+        "settings": [
+          {
+            "type": "header",
+            "content": "All fields are mandatory"
+          },
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image",
+            "info": "Aspect ratio should be around 1:1. For example 500x500"
+          },
+          {
+            "id": "reward_id",
+            "type": "text",
+            "label": "Reward Id",
+            "info": "Inspect the css - select the reward element and look for the data-reward-id value"
+          },
+          {
+            "id": "reward_type",
+            "type": "select",
+            "label": "Reward Type",
+            "options": [
+              {
+                "value": "lion-icon__reward--product-discount-voucher",
+                "label": "Product Discount Voucher"
+              },
+              {
+                "value": "lion-icon__reward--cart-discount-voucher",
+                "label": "Cart Discount Voucher"
+              },
+              {
+                "value": "lion-icon__reward--free-shipping-voucher",
+                "label": "Free Shipping Voucher"
+              },
+              {
+                "value": "lion-icon__reward--checkout-redemption",
+                "label": "Checkout Redemption"
+              }
+            ],
+            "info": "Inspect the css - select the reward element and see which of the classes related to the select it contains"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+<style>
+{%- if section.settings.enabled -%}
+  #loyaltylion .lion-reward-item:not(.lion-reward-item--checkout-redemption) .lion-reward-item__content {
+    justify-content: flex-start;
+  }
+  #loyaltylion .lion-reward-item:not(.lion-reward-item--checkout-redemption) .lion-reward-item__icon {
+    content: '';
+    display: block;
+    height: 230px;
+    width: 100%;
+  }
+  {%- if section.blocks.size > 0 -%}
+    {%- for block in section.blocks -%}
+      {%- if block.settings.reward_id != "" -%}
+      #loyaltylion .lion-reward-item[data-reward-id='{{ block.settings.reward_id }}'] .lion-reward-item__icon {
+        background: url({{ block.settings.image | img_url: '500x' }}) no-repeat center;
+        background-size: contain;
+      }
+
+      #loyaltylion .lion-reward-item[data-reward-id='{{ block.settings.reward_id }}'] .{{ block.settings.reward_type }} {
+        margin: 0 auto;
+        -webkit-mask: none;
+        mask: none;
+      }
+        {%- if block.settings.reward_type == "lion-icon__reward--checkout-redemption" -%}
+        #loyaltylion .lion-reward-item[data-reward-id='{{ block.settings.reward_id }}'] .{{ block.settings.reward_type }} {
+          margin-right: 0.5rem;
+        }
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endif -%}
+</style>
+ 
+  
+

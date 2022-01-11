@@ -1,0 +1,12 @@
+{% capture captured_page %}
+{% section 'product' %}
+{%- comment -%}
+{% section 'product-recommendations' %}
+{%- endcomment -%}
+{% section 'product-story' %}
+{% render 'cf-more-info' %}
+
+{% render 'klaviyo-backinstock' %}
+{% render 'klaviyo-productview' %}
+{% endcapture %}
+{% include 'password-protect' %}

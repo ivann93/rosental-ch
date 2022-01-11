@@ -1,0 +1,19 @@
+{%- assign more_info = "" -%}
+{%- if template contains 'product' -%}
+  {%- if product.metafields.custom_fields["mehr_infos"] != blank -%}
+    {%- assign more_info = product.metafields.custom_fields["mehr_infos"] -%}
+  {%- endif -%}
+{%- elsif template contains 'collection' -%}
+  {%- if collection.metafields.custom_fields["collection-info"] != blank -%}
+    {%- assign more_info = collection.metafields.custom_fields["collection-info"] -%}
+  {%- endif -%}
+{%- else -%}
+{%- endif -%}
+
+{%- if more_info != "" -%}
+  <div class="custom-field custom-field__seo">
+    <div class="custom-field__inner">
+      {{ more_info }}
+    </div>
+  </div>
+{%- endif -%}
